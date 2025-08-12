@@ -1,47 +1,95 @@
-{% if form.errors and not form.non_field_errors %}
-<p class="errornote">
-{% blocktranslate count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktranslate %}
-</p>
-{% endif %}
+{% load i18n static %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:" en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}">
 
-{% if form.non_field_errors %}
-{% for error in form.non_field_errors %}
-<p class="errornote">
-    {{ error }}
-</p>
-{% endfor %}
-{% endif %}
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static "css/side.css" %}">
+    <link rel="stylesheet" href="{% static "css/dark_mode.css" %}">
+    <script src="{% static " admin/js/theme.js" %}"></script>
+    <link rel="stylesheet" href="{% static "css/nav_sidebar.css" %}">
+    <script src="{% static 'js/sidebar.js' %}" defer></script>
+    {% block extrastyle %}{% endblock %}
 
-<div id="content-main">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "css/responsive.css" %}">
+    <meta name="robots" content="NONE,NOARCHIVE">
+    
+    <link rel="stylesheet" href="{% static "css/hamburger_menu.css" %}">
+</head>
 
-{% if user.is_authenticated %}
-<p class="errornote">
-{% blocktranslate trimmed %}
-    You are authenticated as {{ username }}, but are not authorized to
-    access this page. Would you like to login to a different account?
-{% endblocktranslate %}
-</p>
-{% endif %}
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now " Z" %}">
+    <div id="container">
 
-<form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
-  <div class="form-row">
-    {{ form.username.errors }}
-    {{ form.username.label_tag }} {{ form.username }}
-  </div>
-  <div class="form-row">
-    {{ form.password.errors }}
-    {{ form.password.label_tag }} {{ form.password }}
-    <input type="hidden" name="next" value="{{ next }}">
-  </div>
-  {% url 'admin_password_reset' as password_reset_url %}
-  {% if password_reset_url %}
-  <div class="password-reset-link">
-    <a href="{{ password_reset_url }}">{% translate 'Forgotten your login credentials?' %}</a>
-  </div>
-  {% endif %}
-  <div class="submit-row">
-    <input type="submit" value="{% translate 'Log in' %}">
-  </div>
-</form>
+        {% block header %}
+        <header id="header">
+            <div id="branding">
+                {% block branding %}{% endblock %}
+            </div>
+            {% if user.is_authenticated %}
+            <button id="hamburger-menu-toggle" aria-expanded="false" aria-controls="sidebar-nav">
+                ☰
+            </button>
+            {% endif %}
+        </header>
+        {% endblock %}
 
-</div>
+        {% if user.is_authenticated %}
+        <aside id="sidebar-nav">
+            {% if not is_popup and has_permission %}
+            <div id="user-tools" class="sidebar-user-tools">
+                {% block welcome-msg %}
+                {% translate 'Welcome,' %}
+                <strong>{% firstof user.get_short_name user.get_username %}</strong>.
+                {% endblock %}
+                {% block userlinks %}
+                {% if site_url %}
+                <a href="{{ site_url }}">{% translate 'View site' %}</a>
+                {% endif %}
+                {% if user.is_active and user.is_staff %}
+                {% url 'django-admindocs-docroot' as docsroot %}
+                {% if docsroot %}
+                <a href="{{ docsroot }}">{% translate 'Documentation' %}</a>
+                {% endif %}
+                {% endif %}
+                {% if user.has_usable_password %}
+                <a href="{% url 'admin:password_change' %}">{% translate 'Change password' %}</a>
+                {% endif %}
+                <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">{% translate 'Log out' %}</button>
+                </form>
+                {% include "admin/color_theme_toggle.html" %}
+                {% endblock %}
+            </div>
+            {% endif %}
+
+            {% if not is_popup and is_nav_sidebar_enabled %}
+            {% block nav-sidebar %}
+            {% include "admin/nav_sidebar.html" %}
+            {% endblock %}
+            {% endif %}
+        </aside>
+        {% endif %}
+
+        <div class="main" id="main">
+            <main id="content-start" class="content" tabindex="-1">
+                {% block messages %}{% if messages %}...{% endif %}{% endblock messages %}
+                <div id="content" class="{% block coltype %}colM{% endblock %}">
+                    {% block pretitle %}{% endblock %}
+                    {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+                    {% block content_subtitle %}{% if subtitle %}<h2>{{ subtitle }}</h2>{% endif %}{% endblock %}
+                    {% block content %}
+                    {% block object-tools %}{% endblock %}
+                    {{ content }}
+                    {% endblock %}
+                    {% block sidebar %}{% endblock %}
+                    <br class="clear">
+                </div>
+            </main>
+        </div>
+        <footer id="footer">{% block footer %}{% endblock %}</footer>
+    </div>
+</body>
+</html>
