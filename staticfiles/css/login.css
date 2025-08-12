@@ -1,0 +1,13 @@
+ /* Estilo personalizado para el fondo */
+  body {
+    background: url('{% static "img/fondo.jpg" %}') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+  #content-main {
+    background-color: rgba(194, 35, 35, 0.8); /* Opcional: añade un fondo semitransparente al contenido para que sea legible */
+    padding: 20px;
+    border-radius: 5px;
+  }
