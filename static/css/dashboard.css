@@ -65,3 +65,37 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
+
+
+
+        @media (max-width: 640px) {
+            /* Estilos para móviles */
+            table.responsive-table thead {
+                display: none;
+            }
+            table.responsive-table tr {
+                display: block;
+                margin-bottom: 1rem;
+                border: 1px solid #e2e8f0;
+                border-radius: 0.375rem;
+            }
+            table.responsive-table td {
+                display: flex;
+                justify-content: space-between;
+                padding: 0.75rem;
+                border-bottom: 1px solid #e2e8f0;
+            }
+            table.responsive-table td:before {
+                content: attr(data-label);
+                font-weight: 600;
+                padding-right: 1rem;
+            }
+            table.responsive-table td:last-child {
+                border-bottom: none;
+            }
+        }
+
+        .dark table.responsive-table td,
+        .dark table.responsive-table tr {
+            border-color: #334155;
+        }

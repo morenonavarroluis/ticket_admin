@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Moderno</title>
+    <title>Ticketlunch</title>
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -13,55 +13,55 @@
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
     <div class="flex">
       
-        <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full shadow-lg">
+        <aside id="sidebar" class="sidebar bg-white dark:bg-gray-800 fixed top-0 left-0 h-full shadow-lg">
             <div class="flex flex-col h-full">
                 <div class="flex items-center p-4 border-b border-gray-700">
                     <div class="logo-icon w-8 h-8 rounded-md bg-indigo-500 flex items-center justify-center">
                         <i class="fas fa-robot text-white"></i>
                     </div>
-                    <div class="logo-text ml-3 text-xl font-semibold">Ticketlunch</div>
+                    <div class="logo-text ml-3 text-xl font-semibold text-gray-800 dark:text-white">Ticketlunch</div>
                     <button id="sidebar-toggle" class="ml-auto md:hidden">
-                        <i class="fas fa-times text-gray-300"></i>
+                        <i class="fas fa-times text-gray-800 dark:text-white "></i>
                     </button>
                 </div>
            
                 <nav class="flex-1 overflow-y-auto py-4">
                     <ul class="space-y-2 px-4">
                         <li>
-                            <a href="#" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors active">
-                                <i class="fas fa-tachometer-alt w-6 text-center"></i>
-                                <span class="menu-text ml-3">Dashboard</span>
+                            <a href="{% url 'index' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors active">
+                                <i class="fas fa-tachometer-alt w-6 text-center text-gray-800 dark:text-white" ></i>
+                                <span class="menu-text ml-3 text-gray-800 dark:text-white">Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'usu' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
+                                <i class="fas fa-users w-6 text-center text-gray-800 dark:text-white"></i>
+                                <span class="menu-text ml-3 text-gray-800 dark:text-white">Usuarios</span>
                             </a>
                         </li>
                         <li>
                             <a href="#" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
-                                <i class="fas fa-users w-6 text-center"></i>
-                                <span class="menu-text ml-3">Usuarios</span>
+                                <i class="fas fa-chart-bar w-6 text-center text-gray-800 dark:text-white"></i>
+                                <span class="menu-text ml-3 text-gray-800 dark:text-white">Reportes</span>
                             </a>
                         </li>
                         <li>
                             <a href="#" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
-                                <i class="fas fa-chart-bar w-6 text-center"></i>
-                                <span class="menu-text ml-3">Reportes</span>
+                                <i class="fas fa-cog w-6 text-center text-gray-800 dark:text-white"></i>
+                                <span class="menu-text ml-3 text-gray-800 dark:text-white">Configuración</span>
                             </a>
                         </li>
                         <li>
                             <a href="#" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
-                                <i class="fas fa-cog w-6 text-center"></i>
-                                <span class="menu-text ml-3">Configuración</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
-                                <i class="fas fa-envelope w-6 text-center"></i>
-                                <span class="menu-text ml-3">Mensajes</span>
+                                <i class="fas fa-envelope w-6 text-center text-gray-800 dark:text-white"></i>
+                                <span class="menu-text ml-3 text-gray-800 dark:text-white">Mensajes</span>
                                 <span class="ml-auto bg-indigo-500 text-white text-xs font-bold px-2 py-1 rounded-full">5</span>
                             </a>
                         </li>
                          <li>
                             <a href="{% url 'logout_view' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
-                               <i class="fas fa-sign-out-alt w-6 text-center"></i>
-                                <span class="menu-text ml-3">salir</span>
+                               <i class="fas fa-sign-out-alt w-6 text-center text-gray-800 dark:text-white"></i>
+                                <span class="menu-text ml-3 text-gray-800 dark:text-white">salir</span>
                             
                             </a>
                         </li>
@@ -72,8 +72,8 @@
                     <div class="flex items-center">
                         <img src="https://placehold.co/40" alt="Foto de perfil del usuario masculino con traje y fondo azul claro" class="rounded-full">
                         <div class="ml-3">
-                            <div class="menu-text text-sm font-medium">Juan Pérez</div>
-                            <div class="menu-text text-xs text-gray-400">Administrador</div>
+                            <div class="menu-text text-sm font-medium text-gray-800 dark:text-white">Juan Pérez</div>
+                            <div class="menu-text text-xs text-gray-800 dark:text-white">Administrador</div>
                         </div>
                     </div>
                 </div>
@@ -87,11 +87,11 @@
                         <button id="mobile-sidebar-toggle" class="mr-4 text-gray-500 dark:text-gray-300 md:hidden">
                             <i class="fas fa-bars text-xl"></i>
                         </button>
-                        <h1 class="text-xl font-semibold text-gray-800 dark:text-white">Panel de Control</h1>
+                        <h1 class="text-xl font-semibold text-gray-800 dark:text-white">Sistema Administrador</h1>
                     </div>
                     
                     <div class="flex items-center space-x-4">
-                        <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                        <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
                             <i class="fas fa-moon dark:hidden"></i>
                             <i class="fas fa-sun hidden dark:inline-block"></i>
                         </button>
@@ -115,5 +115,6 @@
             {% endblock %}
         </div>
     </div>
+    <script src="{% static 'js/theme.js' %}"></script>
 </body>
 </html>

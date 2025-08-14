@@ -34,9 +34,13 @@ def inicio(request):
         form = AuthenticationForm()
         return render(request, 'paginas/login.html')
     
-@login_required
+
 def index(request):
     return render(request, 'paginas/index.html')
+
+
+def usu(request):
+    return render(request, 'paginas/usuarios.html')
 
 #logout de la aplicacion
 def logout_view(request):
