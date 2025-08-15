@@ -1,60 +1,84 @@
 {% extends 'bases/base_dashboard.html' %}
 
-{% block  content %}
+{% block content %}
+
+{% if messages %}
+{% for message in messages %}
+<script>
+    Swal.fire({
+        title: '{{ message.tags|title }}',
+        text: '{{ message }}',
+        icon: '{{ message.tags }}'
+    });
+</script>
+{% endfor %}
+{% endif %}
 
 </head>
 
-    <div class="container mx-auto px-4 py-8">
-        <h1 class="text-2xl md:text-3xl font-bold mb-6 text-center">Tabla Responsiva con Tema Claro/Oscuro</h1>
-        
-        <div class="overflow-x-auto bg-white dark:bg-dark-100 rounded-lg shadow-md">
-            <table class="responsive-table w-full">
-                <thead class="bg-gray-100 dark:bg-dark-200">
-                    <tr>
-                        <th class="py-3 px-4 text-left">Nombre</th>
-                        <th class="py-3 px-4 text-left">Email</th>
-                        <th class="py-3 px-4 text-left">Rol</th>
-                        <th class="py-3 px-4 text-left">Último Acceso</th>
-                        <th class="py-3 px-4 text-left">Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td class="py-3 px-4" data-label="Nombre">María González</td>
-                        <td class="py-3 px-4" data-label="Email">maria@ejemplo.com</td>
-                        <td class="py-3 px-4" data-label="Rol">Administrador</td>
-                        <td class="py-3 px-4" data-label="Último Acceso">2023-10-15</td>
-                        <td class="py-3 px-4" data-label="Estado"><span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Activo</span></td>
-                    </tr>
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td class="py-3 px-4" data-label="Nombre">Juan Pérez</td>
-                        <td class="py-3 px-4" data-label="Email">juan@ejemplo.com</td>
-                        <td class="py-3 px-4" data-label="Rol">Usuario</td>
-                        <td class="py-3 px-4" data-label="Último Acceso">2023-10-14</td>
-                        <td class="py-3 px-4" data-label="Estado"><span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Activo</span></td>
-                    </tr>
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td class="py-3 px-4" data-label="Nombre">Ana López</td>
-                        <td class="py-3 px-4" data-label="Email">ana@ejemplo.com</td>
-                        <td class="py-3 px-4" data-label="Rol">Editor</td>
-                        <td class="py-3 px-4" data-label="Último Acceso">2023-10-10</td>
-                        <td class="py-3 px-4" data-label="Estado"><span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">Pendiente</span></td>
-                    </tr>
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td class="py-3 px-4" data-label="Nombre">Carlos Ruiz</td>
-                        <td class="py-3 px-4" data-label="Email">carlos@ejemplo.com</td>
-                        <td class="py-3 px-4" data-label="Rol">Usuario</td>
-                        <td class="py-3 px-4" data-label="Último Acceso">2023-09-28</td>
-                        <td class="py-3 px-4" data-label="Estado"><span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">Inactivo</span></td>
-                    </tr>
-                </tbody>
-            </table>
+<div class="container mx-auto px-4 py-8">
+    <div class="flex flex-col items-center mb-6">
+        <h1 class="text-2xl md:text-3xl font-bold dark:text-white">Gestión de Usuarios</h1>
+    </div>
+
+    <div class="flex justify-between items-center mb-6">
+        <div class="flex-grow">
         </div>
+        <div class="space-x-4">
+            <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                href="{% url 'registro' %}">Registrar Rol</a>
+            <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                href="{% url 'user_registro' %}">Registrar Usuario</a>
+        </div>
+    </div>
 
    
-   
+    <div class="overflow-x-auto bg-white dark:bg-dark-100 rounded-lg shadow-md">
+        <table class="responsive-table w-full">
+            <thead class="bg-gray-100 dark:bg-dark-200">
+                <tr>
+                    <th class="py-3 px-4 text-left dark:text-white">Nombre</th>
+                    <th class="py-3 px-4 text-left dark:text-white">Email</th>
+                    <th class="py-3 px-4 text-left dark:text-white">Rol</th>
+                    <th class="py-3 px-4 text-left dark:text-white">Último Acceso</th>
+                     <th class="py-3 px-4 text-left dark:text-white">Detalles</th>
+                    <th class="py-3 px-4 text-left dark:text-white">Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <td class="py-3 px-4 dark:text-white" data-label="Nombre">{{usuario.first_name}}</td>
+                    <td class="py-3 px-4 dark:text-white" data-label="Email">{{ usuario.email }}</td>
+                    <td class="py-3 px-4 dark:text-white">
+                        {% for grou in usuario.groups.all %}
+                        <span>{{ grou.name }}</span>
+                        {% empty %}
+                        <span>Sin grupo asignado</span>
+                        {% endfor %}
+                    </td>
+                    <td class="py-3 px-4 dark:text-white" data-label="Último Acceso">{{ usuario.last_login }}</td>
+                    <td> <button data-modal-target="miModal{{ usuario.id }}"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Ver mas
+                        </button>
+                    </td>
+                    <td> <button data-modal-target="miModal{{ usuario.id }}"
+                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                            Ver mas
+                        </button>
+                    </td>
+                </tr>
+ {% include 'modal/registro.html' %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 
 
 
-{% endblock %}
+
+
+
+    {% endblock %}

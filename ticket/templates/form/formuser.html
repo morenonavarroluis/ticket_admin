@@ -1,0 +1,49 @@
+<form action="" method="post" class="bg-white shadow-md rounded px-7 pt-20 pb-6 mb-2  dark:bg-dark-100">
+    {% csrf_token %}
+    <div class="mb-4">
+        <label for="first_name" class="block text-gray-700 text-sm font-bold mb-2 dark:text-white">Nombre</label>
+        <input type="text" id="first_name" name="first_name" placeholder="Nombre" 
+               class="dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white dark:bg-dark-100">
+    </div>
+    <div class="mb-4">
+        <label for="first_name" class="block text-gray-700 text-sm font-bold mb-2 dark:text-white">Apellido</label>
+        <input type="text" id="first_name" name="last_name" placeholder="Apellido" 
+               class="dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white dark:bg-dark-100">
+    </div>
+    <div class="mb-4">
+        <label for="first_name" class="block text-gray-700 text-sm font-bold mb-2 dark:text-white">Correo</label>
+        <input type="text" id="first_name" name="email" placeholder="Correo" 
+               class="dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white dark:bg-dark-100">
+    </div>
+    <div class="mb-4">
+        <label for="first_name" class="block text-gray-700 text-sm font-bold mb-2 dark:text-white">Rols</label>
+        <select id="first_name" name="rol"
+               class="dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white dark:bg-dark-100">
+           <option>Seleccione un Rols</option>
+             {% for grou in group %}
+                       <option value="{{ grou.id }}">{{ grou.name }}</option>
+                        {% empty %}
+                        <span>Sin grupo asignado</span>
+                        {% endfor %}
+           
+        </select>
+    </div>
+    <div class="mb-4">
+        <label for="first_name" class="block text-gray-700 text-sm font-bold mb-2 dark:text-white">Usuario</label>
+        <input type="text" id="first_name" name="username" placeholder="Usuario" 
+               class="dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white dark:bg-dark-100">
+    </div>
+    <div class="mb-4">
+        <label for="first_name" class="block text-gray-700 text-sm font-bold mb-2 dark:text-white">Contraseña</label>
+        <input type="text" id="first_name" name="password" placeholder="Contraseña" 
+               class="dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white dark:bg-dark-100">
+    </div>
+
+
+    <div class="flex items-center justify-between">
+        <a href="{% url 'usu' %}" 
+               class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"> Cancelar </a>
+        <input type="submit" value="Enviar" 
+               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer">
+    </div>
+</form>
