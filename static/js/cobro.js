@@ -43,3 +43,18 @@ document.addEventListener('DOMContentLoaded', function() {
     actualizarTotales();
   });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('toggle-btn');
+    const toggleCircle = document.getElementById('toggle-circle');
+
+    toggleBtn.addEventListener('click', () => {
+        // Alterna el color de fondo del botón
+        toggleBtn.classList.toggle('bg-gray-300');
+        toggleBtn.classList.toggle('bg-blue-600'); // Color activo
+
+        // Alterna la posición del círculo
+        toggleCircle.classList.toggle('translate-x-1');
+        toggleCircle.classList.toggle('translate-x-6'); // Posición de activado
+    });
+});
