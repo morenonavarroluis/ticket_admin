@@ -43,33 +43,33 @@
                         </li>
                         <li>
                             <a href="{% url 'menu' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
-                               <i class="fa-solid fa-bars"></i>
+                               <i class="fa-solid fa-bars text-gray-800 dark:text-white"></i>
                                 <span class="menu-text ml-3 text-gray-800 dark:text-white">Menu</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
-                                <i class="fa-solid fa-check-double"></i>
+                            <a href="{% url 'seleccion' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
+                                <i class="fa-solid fa-check-double text-gray-800 dark:text-white"></i>
                                 <span class="menu-text ml-3 text-gray-800 dark:text-white">Seleccion</span>
                             </a>
                         </li>
                         <li>
                             <a href="#" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
-                                <i class="fa-solid fa-money-bill-1-wave"></i>
+                                <i class="fa-solid fa-money-bill-1-wave text-gray-800 dark:text-white"></i>
                                 <span class="menu-text ml-3 text-gray-800 dark:text-white">Resumen de pagos</span>
                                 
                             </a>
                         </li>
                         <li>
                             <a href="#" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
-                                    <i class="fa-solid fa-ticket"></i>
+                                    <i class="fa-solid fa-ticket text-gray-800 dark:text-white"></i>
                                 <span class="menu-text ml-3 text-gray-800 dark:text-white">Generar Ticket</span>
                                 
                             </a>
                         </li>
                         <li>
                             <a href="#" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
-                                <i class="fa-solid fa-qrcode"></i>
+                                <i class="fa-solid fa-qrcode text-gray-800 dark:text-white"></i>
                                 <span class="menu-text ml-3 text-gray-800 dark:text-white">Escanera QR</span>
                             </a>
                         </li>
@@ -132,6 +132,7 @@
     </div>
     <script src="{% static 'js/theme.js' %}"></script>
     <script src="{% static 'js/modal.js' %}"></script>
+    <script src="{% static 'js/cobro.js' %}"></script>
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');

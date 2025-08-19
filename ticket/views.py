@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render, redirect ,get_object_or_404
 from django.contrib.auth.forms import  AuthenticationForm 
 from django.contrib.auth.decorators import login_required
@@ -5,6 +6,7 @@ from django.contrib.auth import authenticate ,login ,logout
 from django.contrib.auth.models import User,Group ,Permission
 from django.contrib import messages
 from django.db import transaction
+
 # Create your views here.
 
 def inicio(request):
@@ -132,8 +134,14 @@ def registro(request):
 
 
 def menu(request):
-    return render(request, 'paginas/menu.html')
+    fecha_actual = datetime.now()
+    fechas = {
+        'fecha': fecha_actual
+    }
+    return render(request, 'paginas/menu.html', fechas)
 
+def seleccion(request):
+    return render(request, 'paginas/seleccion.html')
 #logout de la aplicacion
 def logout_view(request):
     logout(request)

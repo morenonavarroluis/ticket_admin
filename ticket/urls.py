@@ -7,5 +7,6 @@ urlpatterns = [
     path('registro' , registro , name='registro' ),
     path('user_registro', user_registro , name='user_registro'),
     path('menu', menu , name='menu'),
+    path('seleccion', seleccion , name='seleccion'),
     path('logout_view' , logout_view , name='logout_view' )
 ]

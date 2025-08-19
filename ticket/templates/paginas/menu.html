@@ -1,10 +1,69 @@
 {% extends 'bases/base_dashboard.html' %}
 {% load static %}
-{% block  content %}
-<div class="container mx-auto px-4 py-20">
-    <div class="bg-white dark:bg-gray-800  pt-6 rounded-lg shadow-md">
-    <h2 class="text-xl font-bold mb-2 dark:text-white text-center">Menu de Hoy</h2>
-    <img src="{% static 'img/images.jpeg' %}" alt="">
+{% block content %}
+
+
+<div class="container mx-auto px-4 ">
+    <div class="flex justify-end m-4 pt-4">
+        <a class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg dark:bg-blue-600" href="">Cargar menu</a>
+    </div>
+    <div class="bg-white dark:bg-gray-800 pt-6 rounded-lg shadow-md">
+        
+            <h1 class="text-xl text-blue-600 font-bold mb-2 dark:text-blue-800 text-center">
+                Menu de Hoy: <strong class="text-dark-600 dark:text-white">{{ fecha|date:"d-m-Y" }}</strong>
+            </h1>
+        
+
+        <div class="flex items-center flex-col md:flex-row py-10">
+
+            <div class="w-full md:w-1/2 px-4 py-10 md:py-0">
+                <img src="{% static 'img/comedor.jpg' %}" alt=""
+                    class="w-full h-auto rounded-lg border-4 border-sky-500 dark:border-white">
+            </div>
+
+            <div class="w-full md:w-1/2 px-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md">
+                        <h3 class="text-blue-600 dark:text-blue-400 font-bold text-lg mb-2">Sopa</h3>
+                        <p class="text-gray-800 dark:text-gray-200">Sopa de Pollo</p>
+                    </div>
+
+                    <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md">
+                        <h3 class="text-blue-600 dark:text-blue-400 font-bold text-lg mb-2">Proteinas</h3>
+                        <ul class="list-disc list-inside text-gray-800 dark:text-gray-200">
+                            <li>Pollo en Salsa</li>
+                            <li>Bistec</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md">
+                        <h3 class="text-blue-600 dark:text-blue-400 font-bold text-lg mb-2">Contornos</h3>
+                        <ul class="list-disc list-inside text-gray-800 dark:text-gray-200">
+                            <li>Arroz Verde</li>
+                            <li>Tajadas</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md">
+                        <h3 class="text-blue-600 dark:text-blue-400 font-bold text-lg mb-2">Ensaladas</h3>
+                        <ul class="list-disc list-inside text-gray-800 dark:text-gray-200">
+                            <li>Ensalada de Berro</li>
+                            <li>Ensalada de Papa</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md">
+                        <h3 class="text-blue-600 dark:text-blue-400 font-bold text-lg mb-2">Jugo</h3>
+                        <p class="text-gray-800 dark:text-gray-200">Flor de Jamaica</p>
+                    </div>
+
+                    <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md">
+                        <h3 class="text-blue-600 dark:text-blue-400 font-bold text-lg mb-2">Postre</h3>
+                        <p class="text-gray-800 dark:text-gray-200">Torta de Chocolate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
