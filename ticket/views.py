@@ -130,6 +130,10 @@ def registro(request):
     
     return render(request, 'paginas/registrar.html', {'permiso': permiso})
 
+
+def menu(request):
+    return render(request, 'paginas/menu.html')
+
 #logout de la aplicacion
 def logout_view(request):
     logout(request)
