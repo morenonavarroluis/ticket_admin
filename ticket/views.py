@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect ,get_object_or_404
 from django.contrib.auth.forms import  AuthenticationForm 
 from django.contrib.auth.decorators import login_required
@@ -6,6 +7,8 @@ from django.contrib.auth import authenticate ,login ,logout
 from django.contrib.auth.models import User,Group ,Permission
 from django.contrib import messages
 from django.db import transaction
+
+
 
 # Create your views here.
 
@@ -142,6 +145,17 @@ def menu(request):
 
 def seleccion(request):
     return render(request, 'paginas/seleccion.html')
+
+def resumen(request):
+    return render(request, 'paginas/resumen.html')
+
+def ticket(request):
+    return render(request, 'paginas/ticket.html')
+
+def qr(request):
+    return render(request, 'paginas/qr.html')
+
+
 #logout de la aplicacion
 def logout_view(request):
     logout(request)

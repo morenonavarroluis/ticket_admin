@@ -8,5 +8,8 @@ urlpatterns = [
     path('user_registro', user_registro , name='user_registro'),
     path('menu', menu , name='menu'),
     path('seleccion', seleccion , name='seleccion'),
+    path('resumen', resumen, name='resumen'),
+    path('ticket', ticket , name='ticket'),
+    path('escanear' , qr , name= 'escanear'),
     path('logout_view' , logout_view , name='logout_view' )
 ]
