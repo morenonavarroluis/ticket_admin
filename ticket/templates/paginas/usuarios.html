@@ -48,7 +48,7 @@
             <tbody>
                 {% for usuario in usuarios %}
                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                    <td class="py-3 px-4 dark:text-white" data-label="Nombre">{{usuario.first_name}}</td>
+                    <td class="py-3 px-4 dark:text-white" data-label="Nombre">{{usuario.name}}</td>
                     <td class="py-3 px-4 dark:text-white" data-label="Email">{{ usuario.email }}</td>
                     <td class="py-3 px-4 dark:text-white">
                         {% for grou in usuario.groups.all %}

@@ -13,34 +13,36 @@
                 Menu de Hoy: <strong class="text-dark-600 dark:text-white">{{ fecha|date:"d-m-Y" }}</strong>
             </h1>
         
-
+{% for menu in menus %}
         <div class="flex items-center flex-col md:flex-row py-10">
 
-            <div class="w-full md:w-1/2 px-4 py-10 md:py-0">
+           <div class="w-full md:w-1/2 px-4 py-10 md:py-0 h-96">
                 <img src="{% static 'img/comedor.jpg' %}" alt=""
-                    class="w-full h-auto rounded-lg border-4 border-sky-500 dark:border-white">
+                    class="w-full h-full object-cover rounded-lg border-4 border-sky-500 dark:border-white">
             </div>
-
+          
+          
+          
             <div class="w-full md:w-1/2 px-4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md">
                         <h3 class="text-blue-600 dark:text-blue-400 font-bold text-lg mb-2">Sopa</h3>
-                        <p class="text-gray-800 dark:text-gray-200">Sopa de Pollo</p>
+                        <p class="text-gray-800 dark:text-gray-200">{{menu.sopa}}</p>
                     </div>
 
                     <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md">
                         <h3 class="text-blue-600 dark:text-blue-400 font-bold text-lg mb-2">Proteinas</h3>
                         <ul class="list-disc list-inside text-gray-800 dark:text-gray-200">
-                            <li>Pollo en Salsa</li>
-                            <li>Bistec</li>
+                            <li>{{menu.contour_one}}</li>
+                            <li>{{menu.contour_two}}</li>
                         </ul>
                     </div>
 
                     <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md">
                         <h3 class="text-blue-600 dark:text-blue-400 font-bold text-lg mb-2">Contornos</h3>
                         <ul class="list-disc list-inside text-gray-800 dark:text-gray-200">
-                            <li>Arroz Verde</li>
-                            <li>Tajadas</li>
+                            <li>{{menu.salad_one}}</li>
+                            <li>{{menu.salad_two}}</li>
                         </ul>
                     </div>
 
@@ -63,6 +65,12 @@
                     </div>
                 </div>
             </div>
+            {% empty %}
+                        <div class="w-full md:w-1/2 px-10 py-12 md:py-0  m-auto">
+                            <img src="{% static 'img/no_hay.png' %}" alt=""
+                                class="w-full h-auto rounded-lg border-4 border-sky-500 dark:border-white">
+                        </div>
+           {% endfor %}
         </div>
     </div>
 </div>
