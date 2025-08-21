@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const almuerzoCheckbox = row.querySelector('td:nth-child(4) input[type="checkbox"]');
     const llevarCheckbox = row.querySelector('td:nth-child(5) input[type="checkbox"]');
     const cubiertosCheckbox = row.querySelector('td:nth-child(6) input[type="checkbox"]');
+    
 
     const totalAlmuerzosSpan = row.querySelector('.total-almuerzos');
     const totalPagarSpan = row.querySelector('.total-a-pagar');

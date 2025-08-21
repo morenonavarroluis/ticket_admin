@@ -200,8 +200,31 @@ def resumen(request):
 def ticket(request):
     return render(request, 'paginas/ticket.html')
 
-def qr(request):
-    return render(request, 'paginas/qr.html')
+def empleados(request):
+    if 'api_token' not in request.session:
+        messages.warning(request, "Debe iniciar sesión para ver esta información.")
+        return redirect('inicio') 
+
+    url_api = "http://comedor.mercal.gob.ve/api/p1/empleados"
+    empleados = []
+    token = request.session.get('api_token')
+    headers = {
+        'Authorization': f'Bearer {token}'
+    }
+    
+    try:
+        response = requests.get(url_api, headers=headers, timeout=10)
+        response.raise_for_status()
+        json_data = response.json()
+
+        # 1. Acceder al primer 'data' y luego al segundo 'data'
+        data_principal = json_data.get('data', {})
+        empleados = data_principal.get('data', [])
+
+    except requests.exceptions.RequestException as req_err:
+        messages.error(request, f"Ocurrió un error inesperado: {req_err}")
+
+    return render(request, 'paginas/empleados.html', {'empleados': empleados})
 
 
 #logout de la aplicacion

@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ticketlunch</title>
+    <link rel="stylesheet" href="{% static 'css/modal.css' %}">
     <link rel="shortcut icon" href="{% static 'img/logo.png' %}"type="image/x-icon">
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   
 </head>
 
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
@@ -68,9 +70,9 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'escanear' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
+                            <a href="{% url 'empleados' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors">
                                 <i class="fa-solid fa-qrcode text-gray-800 dark:text-white"></i>
-                                <span class="menu-text ml-3 text-gray-800 dark:text-white">Escanera QR</span>
+                                <span class="menu-text ml-3 text-gray-800 dark:text-white">Empleados</span>
                             </a>
                         </li>
                         <li>
@@ -130,9 +132,11 @@
             {% endblock %}
         </div>
     </div>
-    <script src="{% static 'js/theme.js' %}"></script>
     <script src="{% static 'js/modal.js' %}"></script>
-    <script src="{% static 'js/cobro.js' %}"></script>
+    <script src="{% static 'js/theme.js' %}"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');

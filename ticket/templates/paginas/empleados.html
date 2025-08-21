@@ -1,0 +1,83 @@
+{% extends 'bases/base_dashboard.html' %}
+{% load static %}
+
+{% block content %}
+  <main class="max-w-6xl mx-auto p-6">
+    <h1 class="text-2xl md:text-3xl font-bold text-center mb-8 select-none dark:text-white">Empleados</h1>
+      <div class="flex flex-col md:flex-row">
+            <div class="w-64 flex-1">
+                <select name="" id="" class="border border-blue-600 rounded-md px-3 py-2 mb-4">
+                    <option value="">Seleccione una Gerencia</option>
+                    <option value="">Tecnologia</option>
+                    <option value="">Comercio</option>
+                    <option value="">Gestion Humana</option>
+                    <option value="">Administracion</option>
+                </select>
+            </div>
+            <div class="w-70 flex-2">
+                <input type="text" class="border border-blue-600 rounded-md px-3 py-2 mb-4" placeholder="Buscar Referencias">
+            </div>
+        </div>  
+    
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden dark:bg-gray-800">
+             
+                <div class="hidden md:grid md:grid-cols-6 bg-gray-100 px-6 py-4 text-sm font-medium text-gray-700 uppercase tracking-wider dark:bg-gray-800">
+                    <div class="dark:text-white">Nombre</div>
+                    <div class="dark:text-white">Cedula</div>
+                    <div class="dark:text-white">Estado</div>
+                    <div class="dark:text-white">Gerencia</div>
+                    <div class="dark:text-white">Ref</div>
+                    <div class="dark:text-white">Status</div>
+                </div>
+
+               {% for empleado in empleados %}
+                 <div class="divide-y divide-gray-200">
+                   <div class="md:grid md:grid-cols-6 md:gap-4 px-6 py-4 card-hover">
+                    
+                        <div class="flex justify-between md:block mb-2 md:mb-0">
+                            <span class="md:hidden text-sm text-gray-600">Nombre:</span>
+                            <span class="font-semibold text-green-600">{{ empleado.nombre_completo }}</span>
+                        </div>
+
+                        <div class="flex justify-between md:block mb-2 md:mb-0">
+                            <span class="md:hidden text-sm text-gray-600">Cedula:</span>
+                            <span class="font-medium">{{ empleado.cedula }}</span>
+                        </div>
+
+                        <div class="flex justify-between md:block mb-2 md:mb-0">
+                            <span class="md:hidden text-sm text-gray-600">Estado:</span>
+                            <span class="font-medium">{{ empleado.estado }}</span>
+                        </div>
+
+                        <div class="flex justify-between md:block mb-2 md:mb-0">
+                            <span class="md:hidden text-sm text-gray-600">Gerencia:</span>
+                            <span class="font-medium">{{ empleado.gerencia.nombre_gerencia }}</span>
+                        </div>
+
+                        <div class="flex justify-between md:block mb-2 md:mb-0">
+                            <span class="md:hidden text-sm text-gray-600">Ref:</span>
+                            <span class="font-medium"></span>
+                        </div>
+
+                        <div class="flex justify-between md:block mb-2 md:mb-0">
+                            <span class="md:hidden text-sm text-gray-600">Status:</span>
+                            <span class="font-medium"></span>
+                        </div>
+                    
+                    </div>
+                
+              
+          
+                </div>
+                {% empty %}
+                    <div class="flex justify-between md:block mb-2 md:mb-0">
+                            <h2 class="dark:text-red-400 text-center ">No hay empleados</h2>
+                        </div>
+
+             {% endfor %}
+        </div>
+    
+   
+  </main>
+
+{% endblock %}

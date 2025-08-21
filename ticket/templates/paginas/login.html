@@ -1,6 +1,19 @@
 {% extends 'bases/base_login.html' %}
 {% load static %}
 {% block  content %}
+
+{% if messages %}
+{% for message in messages %}
+<script>
+    Swal.fire({
+        title: '{{ message.tags|title }}',
+        text: '{{ message }}',
+        icon: '{{ message.tags }}'
+    });
+</script>
+{% endfor %}
+{% endif %}
+
   <section id="left-side" aria-labelledby="login-form-title">
     <img src="{% static 'img/logo.png' %}" />
     <h2 id="login-form-title">Iniciar Sesión</h2>

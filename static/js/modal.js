@@ -1,41 +1,29 @@
- // Selecciona todos los elementos que tienen el atributo 'data-modal-target'
-    const openModalButtons = document.querySelectorAll('[data-modal-target]');
-    // Selecciona todos los elementos que tienen el atributo 'data-modal-hide'
-    const closeModalButtons = document.querySelectorAll('[data-modal-hide]');
+// Obtener los elementos del DOM
+const openModalBtn = document.getElementById('openModalBtn');
+const modal = document.getElementById('myModal');
+const closeButtons = document.querySelectorAll('[data-dismiss="modal"]');
 
-    // Función para abrir el modal
-    function openModal(modal) {
-      if (modal == null) return;
-      modal.classList.remove('hidden');
+// Función para mostrar el modal
+function showModal() {
+    modal.classList.add('show');
+}
+
+// Función para ocultar el modal
+function hideModal() {
+    modal.classList.remove('show');
+}
+
+// Event listener para abrir el modal
+openModalBtn.addEventListener('click', showModal);
+
+// Event listeners para cerrar el modal (botones con data-dismiss)
+closeButtons.forEach(button => {
+    button.addEventListener('click', hideModal);
+});
+
+// Event listener para cerrar el modal al hacer clic en el fondo
+window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        hideModal();
     }
-
-    // Función para cerrar el modal
-    function closeModal(modal) {
-      if (modal == null) return;
-      modal.classList.add('hidden');
-    }
-
-    // Agrega el evento de clic a los botones que abren el modal
-    openModalButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const modal = document.getElementById(button.dataset.modalTarget);
-        openModal(modal);
-      });
-    });
-
-    // Agrega el evento de clic a los botones que cierran el modal
-    closeModalButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const modal = document.getElementById(button.dataset.modalHide);
-        closeModal(modal);
-      });
-    });
-
-    // Agrega el evento de clic en el fondo oscuro para cerrar el modal
-    // Esto evita que se cierre si haces clic dentro del contenido del modal
-    document.getElementById('miModal').addEventListener('click', (e) => {
-        if (e.target.id === 'miModal') {
-            closeModal(document.getElementById('miModal'));
-        }
-    });
-
+});

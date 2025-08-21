@@ -10,6 +10,6 @@ urlpatterns = [
     path('seleccion', seleccion , name='seleccion'),
     path('resumen', resumen, name='resumen'),
     path('ticket', ticket , name='ticket'),
-    path('escanear' , qr , name= 'escanear'),
+    path('empleados' , empleados , name= 'empleados'),
     path('logout_view' , logout_view , name='logout_view' )
 ]
