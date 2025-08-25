@@ -6,6 +6,7 @@ urlpatterns = [
     path('usu', usu , name='usu'),
     path('registro' , registro , name='registro' ),
     path('user_registro', user_registro , name='user_registro'),
+    path('eliminar_user/<int:id>', eliminar_user , name='eliminar_user'),    
     path('menu', menu , name='menu'),
     path('seleccion', seleccion , name='seleccion'),
     path('resumen', resumen, name='resumen'),

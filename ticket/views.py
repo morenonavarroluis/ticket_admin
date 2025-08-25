@@ -163,6 +163,35 @@ def user_registro(request: HttpRequest) -> HttpResponse:
             messages.error(request, f'Error de conexión con la API: {e}')
 
     return render(request, 'paginas/usuarios.html') # Replace with your form template path
+
+def eliminar_user(request, id):
+    if request.method == 'GET':
+        url = f"http://comedor.mercal.gob.ve/api/p1/users/{id}"
+        token = request.session.get('api_token')
+        headers = {
+            'Authorization': f'Bearer {token}',
+            'Content-Type': 'application/json'
+        }
+
+        try:
+            response = requests.delete(url, headers=headers, timeout=10)
+            response.raise_for_status()  # Raise an error for bad responses
+
+            messages.success(request, 'Usuario eliminado exitosamente.')
+            return redirect('usu')
+
+        except requests.exceptions.HTTPError as e:
+            try:
+                json_data = response.json()
+                error_message = json_data.get('message', 'Error al eliminar el usuario.')
+                messages.error(request, error_message)
+            except requests.exceptions.JSONDecodeError:
+                messages.error(request, f'Error del servidor: {response.text}')
+
+        except requests.exceptions.RequestException as e:
+            messages.error(request, f'Error de conexión con la API: {e}')
+
+    return redirect('usu')
         
 def registro(request):
     pass
