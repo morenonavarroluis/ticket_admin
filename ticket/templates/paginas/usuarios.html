@@ -2,18 +2,6 @@
 
 {% block content %}
 
-{% if messages %}
-{% for message in messages %}
-<script>
-    Swal.fire({
-        title: '{{ message.tags|title }}',
-        text: '{{ message }}',
-        icon: '{{ message.tags }}'
-    });
-</script>
-{% endfor %}
-{% endif %}
-
 </head>
 
 <div class="container mx-auto px-4 py-8">
@@ -26,13 +14,12 @@
         </div>
         <div class="space-x-4">
             <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                href="{% url 'registro' %}">Registrar Rol</a>
+                href="">Registrar Rol</a>
             <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                href="{% url 'user_registro' %}">Registrar Usuario</a>
+              data-bs-toggle="modal" data-bs-target="#staticBackdrop" href="">Registrar Usuario</a>
         </div>
     </div>
-
-   
+  {% include 'modal/registrar_usuario.html' %}
     <div class="overflow-x-auto bg-white dark:bg-dark-100 rounded-lg shadow-md">
         <table class="responsive-table w-full">
             <thead class="bg-gray-100 dark:bg-dark-200">

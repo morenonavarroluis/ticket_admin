@@ -26,12 +26,12 @@
                     <div class="dark:text-white">Cedula</div>
                     <div class="dark:text-white">Estado</div>
                     <div class="dark:text-white">Gerencia</div>
-                    <div class="dark:text-white">Ref</div>
-                    <div class="dark:text-white">Status</div>
+                    
+                    <div class="dark:text-white">Opcion</div>
                 </div>
-
+             <div class="border-0 flex flex-col gap-2 p-2 rounded-md"> 
                {% for empleado in empleados %}
-                 <div class="divide-y divide-gray-200">
+                 <div class="outline outline-blue-100  dark:outline dark:outline-gray-100 rounded-md">
                    <div class="md:grid md:grid-cols-6 md:gap-4 px-6 py-4 card-hover">
                     
                         <div class="flex justify-between md:block mb-2 md:mb-0">
@@ -54,14 +54,10 @@
                             <span class="font-medium">{{ empleado.gerencia.nombre_gerencia }}</span>
                         </div>
 
-                        <div class="flex justify-between md:block mb-2 md:mb-0">
-                            <span class="md:hidden text-sm text-gray-600">Ref:</span>
-                            <span class="font-medium"></span>
-                        </div>
 
                         <div class="flex justify-between md:block mb-2 md:mb-0">
-                            <span class="md:hidden text-sm text-gray-600">Status:</span>
-                            <span class="font-medium"></span>
+                            <span class="md:hidden text-sm text-gray-600">Opcion</span>
+                            <span class="font-medium"><button type="submit" class="bg-red-600 dark:bg-red-800 text-white border-red px-2 py-1 rounded-lg">Eliminar</button></span>
                         </div>
                     
                     </div>
@@ -75,6 +71,7 @@
                         </div>
 
              {% endfor %}
+            </div>
         </div>
     
    

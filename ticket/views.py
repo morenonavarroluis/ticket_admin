@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.db import transaction
 import requests
 
-
+#Inicio de sesion con la API externa
 def inicio(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -42,7 +42,7 @@ def inicio(request):
                 else:
                     messages.error(request, 'Token no encontrado en la respuesta de la API.')
             else:
-                # La API devolvió un error (ej. 401 - no autorizado)
+             
                 messages.error(request, 'Credenciales incorrectas. Por favor, inténtelo de nuevo.')
 
         except requests.exceptions.RequestException as e:
@@ -51,14 +51,14 @@ def inicio(request):
     return render(request, 'paginas/login.html')
 
 
-    
+  
 
 def index(request):
     return render(request, 'paginas/index.html')
 
 
 def usu(request: HttpRequest):
-    # 1. Verificar si el token de la API existe en la sesión
+   
     if 'api_token' not in request.session:
         messages.warning(request, "Debe iniciar sesión para ver esta información.")
         return redirect('inicio')  # Redirige a la página de login si no hay token
@@ -102,44 +102,72 @@ def usu(request: HttpRequest):
     # 5. Renderizamos la plantilla con los datos obtenidos (o una lista vacía en caso de error)
     return render(request, 'paginas/usuarios.html', {'usuarios': usuarios})
 
-def user_registro(request):
-   group = Group.objects.all()
-   return render (request, 'paginas/registrar_usuario.html', {'group':group})
+def user_registro(request: HttpRequest) -> HttpResponse:
+    """
+    Handles user registration by sending a POST request to an external API.
 
-def registro(request):
-    permiso = Permission.objects.all()
-    
+    Args:
+        request: The Django HttpRequest object.
+
+    Returns:
+        An HttpResponse redirecting to another page or rendering the registration form.
+    """
+    url = "http://comedor.mercal.gob.ve/api/p1/users"
+    token = request.session.get('api_token')
+    headers = {
+        'Authorization': f'Bearer {token}',
+        'Content-Type': 'application/json'
+    }
+
     if request.method == 'POST':
-        name = request.POST.get('name')
-        permisos_ids = request.POST.getlist('permisos_ids')
+        # Use .get() with a default value to prevent KeyError if a field is missing
+        name = request.POST.get('name', '')
+        email = request.POST.get('email', '')
+        password = request.POST.get('password', '')
+        password_confirmation = request.POST.get('password_confirmation', '')
+        id_gerencia = request.POST.get('id_gerencia', '')
 
-        # 1. Verificar si el grupo ya existe
-        if Group.objects.filter(name=name).exists():
-            # Si el grupo ya existe, muestra un mensaje de error y no crea el grupo
-            messages.error(request, f'El grupo "{name}" ya existe. Por favor, elige otro nombre.')
-            return render(request, 'paginas/registrar.html', {'permiso': permiso})
+        # Basic validation to ensure required fields aren't empty
+        if not all([name, email, password, password_confirmation, id_gerencia]):
+            messages.error(request, 'Todos los campos son obligatorios.')
+            return redirect('nombre_de_la_vista_del_formulario') # Replace with your form view name
 
-        # 2. Si no existe, crea el nuevo grupo
-        new_group = Group.objects.create(name=name)
+        data = {
+            'name': name,
+            'email': email,
+            'password': password,
+            'password_confirmation': password_confirmation,
+            'id_gerencia': id_gerencia
+        }
 
-        # 3. Asignar los permisos al grupo
-        for permiso_id in permisos_ids:
+        try:
+            # It's good practice to set a timeout for external requests
+            response = requests.post(url, json=data, headers=headers, timeout=10)
+            response.raise_for_status()  # This will raise an HTTPError for 4xx/5xx status codes
+
+            messages.success(request, 'Usuario registrado exitosamente.')
+            return redirect('usu')
+
+        except requests.exceptions.HTTPError as e:
+            # Handle HTTP-specific errors (e.g., 400 Bad Request, 401 Unauthorized)
             try:
-                perm = Permission.objects.get(id=permiso_id)
-                new_group.permissions.add(perm)
-            except Permission.DoesNotExist:
-                pass  # Ignorar si el permiso no se encuentra
+                json_data = response.json()
+                error_message = json_data.get('message', 'Error al registrar el usuario.')
+                messages.error(request, error_message)
+            except requests.exceptions.JSONDecodeError:
+                # Handle cases where the response isn't valid JSON
+                messages.error(request, f'Error del servidor: {response.text}')
 
-        messages.success(request, f'El Rols {name} ha sido creado exitosamente.')
-        return redirect('usu')
-    
-    return render(request, 'paginas/registrar.html', {'permiso': permiso})
+        except requests.exceptions.RequestException as e:
+            # Catch all other request-related errors (e.g., connection, DNS)
+            messages.error(request, f'Error de conexión con la API: {e}')
+
+    return render(request, 'paginas/usuarios.html') # Replace with your form template path
+        
+def registro(request):
+    pass
 
 
-import requests
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.http import HttpRequest
 
 def menu(request: HttpRequest):
     if 'api_token' not in request.session:

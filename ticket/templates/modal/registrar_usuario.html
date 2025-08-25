@@ -1,0 +1,28 @@
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content dark:bg-gray-800">
+      <div class="modal-header">
+        <h5 class="modal-title dark:text-white" id="staticBackdropLabel">Registrar Usuarios</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="user_registro" method="post">
+          {% csrf_token %}
+        <div class="grid grid-cols-1 gap-4">
+            <input type="text" class="border dark:bg-gray-600 py-1 px-2 rounded-md dark:text-white" name="name" placeholder="Nombre Completo"> 
+            <input type="email" class="border dark:bg-gray-600 py-1 px-2 rounded-md dark:text-white" name="email" placeholder="Correo Electrónico">
+            <input type="text" class="border dark:bg-gray-600 py-1 px-2 rounded-md dark:text-white" name="password" placeholder="Contraseña">
+            <input type="text" class="border dark:bg-gray-600 py-1 px-2 rounded-md dark:text-white" name="password_confirmation" placeholder="Confitmar Contraseña">
+            <input type="text" class="border dark:bg-gray-600 py-1 px-2 rounded-md dark:text-white" name="id_gerencia" placeholder="Gerencia">
+        </div>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Registrar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
