@@ -130,7 +130,7 @@ def user_registro(request: HttpRequest) -> HttpResponse:
         # Basic validation to ensure required fields aren't empty
         if not all([name, email, password, password_confirmation, id_gerencia]):
             messages.error(request, 'Todos los campos son obligatorios.')
-            return redirect('nombre_de_la_vista_del_formulario') # Replace with your form view name
+            return redirect('usu') # Replace with your form view name
 
         data = {
             'name': name,
@@ -249,7 +249,29 @@ def menu(request: HttpRequest):
     
 
 def seleccion(request):
-    return render(request, 'paginas/seleccion.html')
+    if 'api_token' not in  request.session:
+        messages.warning(request,"Debe iniciar sesión para ver esta información.")
+        return redirect (inicio)
+    
+    url_api = "http://comedor.mercal.gob.ve/api/p1/empleados"
+    empleados = []
+    token = request.session.get('api_token')
+    headers = {
+        'Authorization': f'Bearer {token}'
+    }
+    try:
+        response = requests.get(url_api, headers=headers, timeout=10)
+        response.raise_for_status()
+        json_data = response.json()
+
+        # 1. Acceder al primer 'data' y luego al segundo 'data'
+        data_principal = json_data.get('data', {})
+        empleados = data_principal.get('data', [])
+
+    except requests.exceptions.RequestException as req_err:
+        messages.error(request, f"Ocurrió un error inesperado: {req_err}")
+
+    return render(request, 'paginas/seleccion.html', {'empleados': empleados})
 
 def resumen(request):
     return render(request, 'paginas/resumen.html')
