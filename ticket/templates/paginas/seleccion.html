@@ -22,44 +22,29 @@
         <table class="responsive-table w-full">
             <thead class="bg-gray-100 dark:bg-dark-200">
                 <tr>
-                    <th class="py-3 px-4 text-left dark:text-white">Nombre y Apellido</th>
-                    <th class="py-3 px-4 text-left dark:text-white">Almuerzo Bs</th>
-                    <th class="py-3 px-4 text-left dark:text-white">Para llevar Bs</th>
-                    <th class="py-3 px-4 text-left dark:text-white">cubiertos Bs</th>
-                     <th class="py-3 px-4 text-left dark:text-white">autorizado</th>
-                     <th class="py-3 px-4 text-left dark:text-white">Almuerzo autorizado</th>
-                    <th class="py-3 px-4 text-left dark:text-white">total Almuerzo</th>
-                    <th class="py-3 px-4 text-left dark:text-white">total a pagar</th>
+                    <th class="py-3 px-4 text-center dark:text-white">Nombre y Apellido</th>
+                    <th class="py-3 px-4 text-center dark:text-white">Almuerzo Bs</th>
+                    <th class="py-3 px-4 text-center dark:text-white">Para llevar Bs</th>
+                    <th class="py-3 px-4 text-center dark:text-white">cubiertos Bs</th>
+                    <th class="py-3 px-4 text-center dark:text-white">total a pagar</th>
                 </tr>
             </thead>
             <tbody>
                 {% for empleado in empleados %}
                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                    <td class="py-3 px-1 dark:text-white" data-label="Nombre">{{ empleado.nombre_completo }}</td>
+                    <td class="py-3 px-1 dark:text-white text-center" data-label="Nombre">{{ empleado.nombre_completo }}</td>
                     <td class="py-3  dark:text-white" data-label="Almuerzo Bs">
-                        <input type="checkbox" name="" id="item1">
+                        <input type="checkbox" name="" id="item1" value="144">
                     </td>
                     <td class="py-3 px-1 dark:text-white" data-label="Para llevar Bs">
-                       <input type="checkbox" name="" id="item1">
+                       <input type="checkbox" name="" id="item2" value="10">
                     </td>
                     <td class="py-3 px-1 dark:text-white" data-label="Cubiertos Bs">
-                         <input type="checkbox" name="" id="item1">
+                         <input type="checkbox" name="" id="item3" value="5">
                     </td>
-                    <td class="py-3 px-1 dark:text-white" data-label="Autorizado"> 
-                         <input type="checkbox" name="" id="item1">
-                    </td>
-                    <td class="py-3 px-1 dark:text-white" data-label="Almuerzo autorizado">
-                     <select name="" id="" class="px-2 py-1 rounded-md dark:bg-gray-700 dark:text-white">
-                       {% for e in empleados %}
-                        <option value="">{{ e.nombre_completo }}</option>
-                        {% endfor  %}
-                     </select>  
-                    </td>
-                    <td class="py-3 px-1 dark:text-white" data-label="total Almuerzo">
-                        <span>0</span>
-                    </td>
-                    <td class="py-3 px-1 dark:text-white" data-label="total a pagar">
-                        <span>0</span>
+                  
+                    <td class="py-3 px-1 dark:text-green-500 text-center" data-label="total a pagar">
+                        <span id="total">0</span>
                     </td>
                     
                 </tr>

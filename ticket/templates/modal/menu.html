@@ -1,4 +1,3 @@
-<!-- Modal -->
 <div class="modal fade" id="menu" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -8,27 +7,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body dark:bg-gray-800">
-                <form action="" method="post">
+                <form action="" method="post" id="menuForm">
                     {% csrf_token %}
-                    <div class="grid grid-cols-1 gap-4">
-                        <input type="text" class="border dark:bg-gray-600 py-1 px-2 rounded-md dark:text-white"
-                            name="name">
-                        <input type="email" class="border dark:bg-gray-600 py-1 px-2 rounded-md dark:text-white"
-                            name="email">
-                        <input type="text" class="border dark:bg-gray-600 py-1 px-2 rounded-md dark:text-white"
-                            name="password">
-                        <input type="text" class="border dark:bg-gray-600 py-1 px-2 rounded-md dark:text-white"
-                            name="password_confirmation">
-                        <input type="text" class="border dark:bg-gray-600 py-1 px-2 rounded-md dark:text-white"
-                            name="id_gerencia">
-                    </div>
-
+                    <div id="container-grupos-menu" class="flex flex-col"></div>
+                </form>
             </div>
             <div class="modal-footer flex gap-4">
                 <button type="button" class="btn btn-secondary w-20 flex-auto" data-bs-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary w-20 flex-auto">Registrar</button>
+                <button type="submit" form="menuForm" class="btn btn-primary w-20 flex-auto">Registrar</button>
             </div>
-            </form>
         </div>
     </div>
 </div>
