@@ -1,0 +1,190 @@
+{% extends 'bases/base_dashboard.html' %}
+{% load static %}
+{% block content %}
+
+<div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+
+    <header class="mb-10 flex flex-col md:flex-row justify-between items-center">
+        <div class="text-center md:text-left">
+            <h1 class="text-5xl font-extrabold text-indigo-600 dark:text-indigo-400 tracking-tight">
+                Menú de hoy: {{ fecha_actual }}
+            </h1>
+            <p class="text-lg text-gray-500 dark:text-gray-400 mt-2">
+                Tasa BCV: <span class="font-semibold text-xl text-green-600 dark:text-green-400">Bs. 240.32</span>
+            </p>
+        </div>
+        {% include 'modal/menu.html' %}
+        <div class="mt-4 md:mt-0">
+            <button data-bs-toggle="modal" data-bs-target="#menu" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-full 
+                           shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-0.5 
+                           focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50">
+                ➕ Agregar Menú
+            </button>
+        </div>
+    </header>
+
+    <div class="flex flex-col lg:flex-row gap-8">
+
+        <div class="lg:w-1/3">
+            <div class="relative overflow-hidden rounded-xl shadow-2xl h-full min-h-[300px]">
+                <img src="{% static 'img/comedor.jpeg' %}" 
+                     alt="Vista del autoservicio de hoy" 
+                     class="w-full h-full object-cover transition duration-500 ease-in-out transform hover:scale-105"
+                >
+             
+            </div>
+        </div>
+
+        <div class="lg:w-2/3">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                {% if grouped_menus.Sopas %}
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-blue-500">
+                    <div class="flex items-center mb-3">
+                        <span class="text-blue-500 text-2xl mr-3">🥣</span>
+                        <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100">Sopas</h3>
+                    </div>
+                    <ul class="space-y-1 text-gray-600 dark:text-gray-300">
+                        <li class="flex items-start">
+                            <span class="text-blue-500 mr-2">•</span> <span>{{ grouped_menus.Sopas.0 }}</span>
+                        </li>
+                        {% if grouped_menus.Sopas.1 %}
+                        <li class="flex items-start">
+                            <span class="text-blue-500 mr-2">•</span> <span>{{ grouped_menus.Sopas.1 }}</span>
+                        </li>
+                        {% endif %}
+                        {% if grouped_menus.Sopas.2 %}
+                        <li class="flex items-start">
+                            <span class="text-blue-500 mr-2">•</span> <span>{{ grouped_menus.Sopas.2 }}</span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if grouped_menus.Contornos %}
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-yellow-500">
+                    <div class="flex items-center mb-3">
+                        <span class="text-yellow-500 text-2xl mr-3">🍚</span>
+                        <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100">Contornos</h3>
+                    </div>
+                    <ul class="space-y-1 text-gray-600 dark:text-gray-300">
+                        <li class="flex items-start">
+                            <span class="text-yellow-500 mr-2">•</span> <span>{{ grouped_menus.Contornos.0 }}</span>
+                        </li>
+                        {% if grouped_menus.Contornos.1 %}
+                            <li class="flex items-start">
+                                <span class="text-yellow-500 mr-2">•</span> <span>{{ grouped_menus.Contornos.1 }}</span>
+                            </li>
+                        {% endif %}
+                        {% if grouped_menus.Contornos.2 %}
+                            <li class="flex items-start">
+                                <span class="text-yellow-500 mr-2">•</span> <span>{{ grouped_menus.Contornos.2 }}</span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if grouped_menus.Proteinas %}
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-red-500">
+                    <div class="flex items-center mb-3">
+                        <span class="text-red-500 text-2xl mr-3">🥩</span>
+                        <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100">Proteínas</h3>
+                    </div>
+                    <ul class="space-y-1 text-gray-600 dark:text-gray-300">
+                        <li class="flex items-start">
+                            <span class="text-red-500 mr-2">•</span> <span>{{ grouped_menus.Proteinas.0 }}</span>
+                        </li>
+                      {% if grouped_menus.Proteinas.1 %} 
+                        <li class="flex items-start">
+                            <span class="text-red-500 mr-2">•</span> <span>{{ grouped_menus.Proteinas.1 }}</span>
+                        </li>
+                       {% endif %}
+                      {% if grouped_menus.Proteinas.2 %} 
+                        <li class="flex items-start">
+                            <span class="text-red-500 mr-2">•</span> <span>{{ grouped_menus.Proteinas.2 }}</span>
+                        </li>
+                       {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                {% if grouped_menus.Postres %}
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-pink-500">
+                    <div class="flex items-center mb-3">
+                        <span class="text-pink-500 text-2xl mr-3">🍰</span>
+                        <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100">Postres</h3>
+                    </div>
+                    <ul class="space-y-1 text-gray-600 dark:text-gray-300">
+                        <li class="flex items-start">
+                            <span class="text-pink-500 mr-2">•</span> <span>{{ grouped_menus.Postres.0 }}</span>
+                        </li>
+                       {% if grouped_menus.Postres.1 %} 
+                        <li class="flex items-start">
+                            <span class="text-pink-500 mr-2">•</span> <span>{{ grouped_menus.Postres.1 }}</span>
+                        </li>
+                        {% endif %}
+                       {% if grouped_menus.Postres.2 %} 
+                        <li class="flex items-start">
+                            <span class="text-pink-500 mr-2">•</span> <span>{{ grouped_menus.Postres.2 }}</span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                {% if grouped_menus.Bebidas %}
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-cyan-500">
+                    <div class="flex items-center mb-3">
+                        <span class="text-cyan-500 text-2xl mr-3">🍹</span>
+                        <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100">Bebidas</h3>
+                    </div>
+                    <ul class="space-y-1 text-gray-600 dark:text-gray-300">
+                        <li class="flex items-start">
+                            <span class="text-cyan-500 mr-2">•</span> <span>{{ grouped_menus.Bebidas.0 }}</span>
+                        </li>
+                      {% if grouped_menus.Bebidas.1 %}  
+                        <li class="flex items-start">
+                            <span class="text-cyan-500 mr-2">•</span> <span>{{ grouped_menus.Bebidas.1 }}</span>
+                        </li>
+                      {% endif %}
+                      {% if grouped_menus.Bebidas.2 %}  
+                        <li class="flex items-start">
+                            <span class="text-cyan-500 mr-2">•</span> <span>{{ grouped_menus.Bebidas.2 }}</span>
+                        </li>
+                      {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if grouped_menus.Ensaladas %}
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-green-500">
+                    <div class="flex items-center mb-3">
+                        <span class="text-green-500 text-2xl mr-3">🥗</span>
+                        <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100">Ensaladas</h3>
+                    </div>
+                    <ul class="space-y-1 text-gray-600 dark:text-gray-300">
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">•</span> <span>{{ grouped_menus.Ensaladas.0 }}</span>
+                        </li>
+                      {% if grouped_menus.Ensaladas.1 %}  
+                        <li class="flex items-start">
+                            <span class="text-cyan-500 mr-2">•</span> <span>{{ grouped_menus.Ensaladas.1 }}</span>
+                        </li>
+                      {% endif %}
+                      {% if grouped_menus.Ensaladas.2 %}  
+                        <li class="flex items-start">
+                            <span class="text-cyan-500 mr-2">•</span> <span>{{ grouped_menus.Ensaladas.2 }}</span>
+                        </li>
+                      {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+ <script src="{% static 'js/form_modal_menu.js' %}"></script>
+{% endblock %}

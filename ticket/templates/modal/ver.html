@@ -1,0 +1,82 @@
+<div class="modal fade" id="Ver{{ usuario.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg ">
+        <div class="modal-content dark:bg-gray-800 p-6 shadow-2xl rounded-xl">
+            <div class="modal-header border-b-2 border-gray-200 dark:border-gray-700 pb-4">
+                <h5 class="modal-title dark:text-white text-3xl font-extrabold text-center w-full"
+                    id="staticBackdropLabel">
+                    Detalles de {{usuario.employees.first_name }}
+                </h5>
+
+            </div>
+
+            <div class="modal-body pt-4">
+                <h3 class="text-xl font-bold dark:text-white border-t pt-4 mt-4 border-gray-200 dark:border-gray-700">
+                    Datos Personales y Puesto</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2 mb-6">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Cédula:</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ usuario.employees.cedula }}
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Nombre:</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ usuario.employees.first_name }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Apellido:</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ usuario.employees.last_name }}
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Puesto:</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ usuario.employees.position }}
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-sm font-medium text-gray-500 dark:text-gray-400">Tipo de Empleado:</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ usuario.employees.type_employee }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Estado/Sede:</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ usuario.employees.state }}</p>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold dark:text-white border-t pt-4 mt-4 border-gray-200 dark:border-gray-700">
+                    Contacto y Gerencia</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 mb-6">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Email de Usuario:</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ usuario.email }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Teléfono:</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ usuario.employees.phone }}</p>
+                    </div>
+                    <div class="md:col-span-2">
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Gerencia/División:</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ usuario.employees.management }}</p>
+                    </div>
+                </div>
+
+
+                {% if pedido.payment_support %}
+                <h3 class="text-xl font-bold dark:text-white border-t pt-4 mt-4 border-gray-200 dark:border-gray-700">
+                    Comprobante de Pago</h3>
+                <div class="mt-4 flex justify-center">
+                    <img src="{{ pedido.payment_support }}" alt="Comprobante de Pago"
+                        class="rounded-lg shadow-md max-w-full max-h-96 object-contain border border-gray-300 dark:border-gray-700 p-1">
+                </div>
+                {% endif %}
+            </div>
+            <div class="modal-footer border-t-2 border-gray-200 dark:border-gray-700 pt-4 flex justify-end">
+                <button type="button"
+                    class="btn bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-300"
+                    data-bs-dismiss="modal">Cerrar</button>
+                <!--<button type="button" class="btn bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-3 transition duration-300">Guardar Cambios</button>-->
+            </div>
+        </div>
+    </div>
+</div>

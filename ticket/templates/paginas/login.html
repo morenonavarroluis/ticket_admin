@@ -1,0 +1,49 @@
+{% extends 'bases/base_login.html' %}
+{% load static %}
+{% block  content %}
+
+{% if messages %}
+{% for message in messages %}
+<script>
+    Swal.fire({
+        title: '{{ message.tags|title }}',
+        text: '{{ message }}',
+        icon: '{{ message.tags }}'
+    });
+</script>
+{% endfor %}
+{% endif %}
+
+  <section id="left-side" aria-labelledby="login-form-title">
+    <img src="{% static 'img/logo.png' %}" />
+    <h2 id="login-form-title">Iniciar Sesión</h2>
+    <form  method="post">
+      {% csrf_token %}
+      <label class="input-icon" for="email" aria-label="Correo electrónico">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5Z"/></svg>
+        <input type="email" id="email" name="email" placeholder="Correo electrónico" required autocomplete="email" />
+      </label>
+      <label class="input-icon" for="password" aria-label="Contraseña">
+        <div class="relative">
+            <input type="password" id="password" name="password" 
+                  placeholder="Contraseña" required autocomplete="current-password" 
+                  class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <i class="fa-solid fa-lock-open absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+        </div>
+      </label>
+      <button class="text-white bg-blue-900" type="submit" aria-label="Iniciar sesión">Iniciar Sesión</button>
+    </form>
+    <a href="#" class="forgot-password" tabindex="0">¿Olvidaste tu contraseña?</a>
+  </section>
+
+  <section id="right-side" aria-label="Información TicketLunch">
+    <img 
+      src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/dd0d8e78-2999-4c46-af72-36c477ac4e1e.png" 
+      alt="Vista de comedor con varias personas sentadas en mesas compartiendo comida en un ambiente luminoso con paredes blancas y ventana amplia" 
+      class="photo"
+      onerror="this.style.display='none';" />
+    <h3>TICKETLUNCH</h3>
+    <p>Bienvenido a nuestra aplicación.<br />Inicia sesión para continuar.</p>
+  </section>
+
+{% endblock %}

@@ -1,0 +1,225 @@
+{% extends 'bases/base_dashboard.html' %}
+{% load static %}
+{% block content %}
+<main class="max-w-6xl mx-auto p-6">
+    <h1 class="text-2xl md:text-3xl font-bold text-center mb-8 select-none dark:text-white">Resumen de Almuerzos</h1>
+
+    <section class="bg-white rounded-xl shadow-md p-6 mb-12 dark:bg-gray-800">
+        <header class="flex justify-between items-center mb-4">
+            <h2 class="font-semibold text-lg md:text-xl dark:text-white">Detalles de la Orden</h2>
+            <span class="text-green-600 font-semibold text-sm md:text-base">Total a pagar: <span class="font-bold">Bs. {{ total_general }}</span></span>
+        </header>
+
+        <div class="hidden md:block overflow-x-auto max-h-96 overflow-y-auto bg-white dark:bg-gray-800 rounded-lg shadow-md">
+            <table class="w-full text-sm rounded-lg overflow-hidden">
+                <thead class="bg-blue-600 text-white dark:bg-blue-800 dark:text-gray-100">
+                    <tr>
+                        <th class="py-3 px-4 font-semibold text-left">Empleado</th>
+                        <th class="py-3 px-4 font-semibold text-center">Almuerzo</th>
+                        <th class="py-3 px-4 font-semibold text-center">Para Llevar</th>
+                        <th class="py-3 px-4 font-semibold text-center">Cubiertos</th>
+                        <th class="py-3 px-4 font-semibold text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="resumen-tbody" class="bg-white divide-y divide-gray-200 dark:bg-gray-700 dark:divide-gray-600">
+                </tbody>
+            </table>
+        </div>
+
+        {% include 'modal/pago_movil.html' %}
+        <div class="md:hidden space-y-4 p-4">
+            </div>
+    </section>
+    
+    <a class="bg-blue-600 px-3 py-1 rounded-lg " href="{% url 'seleccion' %}">Regresar</a>
+    
+    <section>
+        <h3 class="text-xl md:text-2xl font-semibold mb-6 text-center select-none dark:text-white">Opciones de Pago</h3>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
+            <div class="bg-blue-200 dark:bg-blue-600 rounded-lg p-4 flex flex-col items-center cursor-pointer select-none transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500" data-bs-toggle="modal" data-bs-target="#movil">
+                <span>Pago Movil</span>
+                <img src="{% static 'img/pago.png' %}" alt="Pago Movil" class="w-16 h-16 mt-2">
+            </div>
+            <div class="bg-blue-200 dark:bg-blue-600 rounded-lg p-4 flex flex-col items-center cursor-pointer select-none transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500" data-bs-toggle="modal" data-bs-target="#debitos">
+                <span>Debito</span>
+                <img src="{% static 'img/tarjeta.png' %}" alt="Pago Movil" class="w-16 h-16 mt-2">
+            </div>
+            <div class="bg-blue-200 dark:bg-blue-600 rounded-lg p-4 flex flex-col items-center cursor-pointer select-none transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500" data-bs-toggle="modal" data-bs-target="#Tranferencias">
+                <span>Transferencias</span>
+                <img src="{% static 'img/banesco.jpg' %}" alt="Pago Movil" class="w-16 h-16 mt-2">
+            </div>
+            <div class="bg-blue-200 dark:bg-blue-600 rounded-lg p-4 flex flex-col items-center cursor-pointer select-none transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500" data-bs-toggle="modal" data-bs-target="#efectivo">
+                <span>efectivo</span>
+                <img src="{% static 'img/efectivo.png' %}" alt="Pago Movil" class="w-16 h-16 mt-2">
+            </div>
+        </div>
+    </section>
+
+    {% include 'modal/transf.html' %}
+</main>
+
+
+<script>
+    // 1. Mover la clave de almacenamiento fuera para que ambas funciones la usen
+    const STORAGE_KEY = 'employeeSelectionsData';
+    console.log(STORAGE_KEY)
+    // --- FUNCIÓN PARA ELIMINAR SELECCIÓN INDIVIDUAL ---
+    function handleDeleteClick(event) {
+        // Obtenemos la cédula del atributo data-cedula del botón
+        const cedulaToDelete = event.target.dataset.cedula; 
+        
+        // 🛑 ELIMINAMOS LA LÍNEA DE CONFIRMACIÓN:
+        // const confirmation = confirm(`¿Está seguro de que desea eliminar...?`); 
+
+        // 🛑 ELIMINAMOS EL CONDICIONAL 'if (confirmation)'
+        // El código se ejecuta directamente
+        let selections = {};
+        try {
+            const storedData = localStorage.getItem(STORAGE_KEY);
+            console.log(storedData)
+            if (storedData) {
+                selections = JSON.parse(storedData);
+            }
+        } catch (e) {
+            console.error('Error al cargar de localStorage:', e);
+            return;
+        }
+
+        // Eliminar la entrada del empleado (la cédula)
+        if (selections[cedulaToDelete]) {
+            delete selections[cedulaToDelete]; 
+            
+            // Guardar el objeto actualizado en localStorage
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
+            } catch (e) {
+                console.error('Error al guardar en localStorage:', e);
+            }
+
+            // Recargar la función de renderizado para actualizar la vista
+            loadAndRenderSelections();
+        } else {
+            console.warn(`No se encontró la selección para la cédula ${cedulaToDelete}.`);
+        }
+    }
+    
+   
+    function loadAndRenderSelections() {
+        const tbody = document.getElementById('resumen-tbody');
+        
+        const mobileContainer = document.querySelector('.md\\:hidden.space-y-4.p-4'); 
+
+        let selections = {};
+        try {
+            const storedData = localStorage.getItem(STORAGE_KEY);
+            if (storedData) {
+                selections = JSON.parse(storedData);
+            }
+        } catch (e) {
+            console.error('Error al cargar de localStorage:', e);
+            return;
+        }
+
+        if (!tbody || !mobileContainer) {
+            console.error("No se encontró el <tbody> o el contenedor móvil. Asegúrate de añadir el ID 'resumen-tbody'.");
+            return;
+        }
+
+        // 1. Limpiar el contenido existente
+        tbody.innerHTML = '';
+        mobileContainer.innerHTML = '';
+
+        let totalEmpleadosConPedido = 0;
+
+        // 2. Iterar y renderizar filas y tarjetas
+        for (const cedula in selections) {
+            const selection = selections[cedula];
+
+            // Renderizar solo si el empleado tiene al menos una selección 'Si'
+            if (selection.lunch === 'Si' || selection.to_go === 'Si' || selection.covered === 'Si') {
+                totalEmpleadosConPedido++;
+                
+                // --- A. Renderizado de la Fila de Tabla (Desktop View) ---
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50 dark:hover:bg-gray-600 transition duration-150';
+
+                // Función auxiliar para crear celdas
+                const createCell = (content, isName = false) => {
+                    const cell = document.createElement('td');
+                    cell.className = `py-3 px-4 ${isName ? 'font-medium text-gray-900 dark:text-white text-left' : 'text-center text-gray-700 dark:text-gray-200'}`;
+                    cell.textContent = content;
+                    return cell;
+                };
+
+                row.appendChild(createCell(selection.name, true)); // Empleado
+                row.appendChild(createCell(selection.lunch));      // Almuerzo
+                row.appendChild(createCell(selection.to_go));      // Para Llevar
+                row.appendChild(createCell(selection.covered));    // Cubiertos
+                
+                // ----------------------------------------------------
+                // ✅ IMPLEMENTACIÓN DEL BOTÓN ELIMINAR (CORREGIDO)
+                // ----------------------------------------------------
+               
+                const actionCell = document.createElement('td');
+                actionCell.className = 'py-3 px-4 text-center';
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'limpiar';
+                deleteButton.className = 'bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded text-xs transition duration-150 ease-in-out';
+                deleteButton.dataset.cedula = cedula;
+               
+                // 🚀 LÍNEA CORREGIDA: Asignar el evento de eliminación
+                deleteButton.addEventListener('click', handleDeleteClick);
+                
+                actionCell.appendChild(deleteButton);
+                row.appendChild(actionCell);
+                // ----------------------------------------------------
+
+                tbody.appendChild(row);
+
+
+                // --- B. Renderizado de la Tarjeta (Mobile View) ---
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-gray-800 p-4 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700";
+                card.innerHTML = `
+                    <h3 class="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3 border-b pb-2 border-gray-100 dark:border-gray-700">
+                        ${selection.name}
+                    </h3>
+                    <div class="grid grid-cols-2 gap-y-3 gap-x-4 text-sm">
+                        <div class="flex flex-col">
+                            <span class="font-semibold text-gray-500 dark:text-gray-400">Almuerzo:</span>
+                            <span class="text-gray-900 dark:text-white">${selection.lunch}</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-semibold text-gray-500 dark:text-gray-400">Para Llevar:</span>
+                            <span class="text-gray-900 dark:text-white">${selection.to_go}</span>
+                        </div>
+                        <div class="flex flex-col col-span-2">
+                            <span class="font-semibold text-gray-500 dark:text-gray-400">Cubiertos:</span>
+                            <span class="text-gray-900 dark:text-white">${selection.covered}</span>
+                        </div>
+                    </div>
+                `;
+                mobileContainer.appendChild(card);
+            }
+        }
+        
+        // Si no hay selecciones, mostrar un mensaje (opcional)
+        if (totalEmpleadosConPedido === 0) {
+             const noResultsRow = document.createElement('tr');
+             noResultsRow.innerHTML = `<td colspan="5" style="text-align: center; padding: 20px;">No hay selecciones de almuerzo guardadas.</td>`;
+             tbody.appendChild(noResultsRow);
+        }
+    }
+    
+    // Solo ejecutamos la llamada inicial al cargar el DOM
+    document.addEventListener('DOMContentLoaded', () => {
+        loadAndRenderSelections();
+    });
+</script>
+
+
+{% include 'modal/efectivo.html' %}
+{% include 'modal/dibitos.html' %}
+{% endblock %}

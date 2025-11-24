@@ -1,0 +1,10 @@
+{% extends 'bases/base_dashboard.html' %}
+{% load static %}
+{% block content %}
+
+<h1 class="dark:text-white text-2xl text-center pt-2">Escanear Código QR</h1>
+    <div id="reader" class=" m-auto pt-10"></div>
+    <div id="result"></div>
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<script src="{% static 'js/qr.js' %}"></script>
+{% endblock %}

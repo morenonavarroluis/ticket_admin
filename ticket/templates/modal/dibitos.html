@@ -1,0 +1,117 @@
+<div class="modal fade" id="debitos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-="true">
+    <div class="modal-dialog">
+        <div class="modal-content dark:bg-gray-800 p-6">
+            <div class="modal-header border-b-0 pb-0">
+                <h5 class="modal-title dark:text-white text-xl font-bold text-center w-full" id="staticBackdropLabel">
+                    Total a pagar: <span class="text-green-500">Bs. {{ total_general }}</span></h5>
+                <button type="button" class="btn-close absolute top-3 right-3" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-0 max-h-96 overflow-y-auto">
+
+                <div class="grid grid-cols-2 gap-y-4 text-blue-800 dark:text-blue-300 font-semibold mb-6">
+                    <span class="text-left">Número de Teléfono:</span>
+                    <div class="flex items-center justify-end">
+                        <span>0414-2418171</span>
+                        <button class="ml-2" onclick="navigator.clipboard.writeText('0414-2418171')">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400"
+                                viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                                <path
+                                    d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <span class="text-left">Banco:</span>
+                    <div class="flex items-center justify-end">
+                        <span>0108 - Provincial</span>
+                        <button class="ml-2" onclick="navigator.clipboard.writeText('0108')">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400"
+                                viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                                <path
+                                    d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <span class="text-left">Cédula:</span>
+                    <div class="flex items-center justify-end">
+                        <span>V-19.254.775</span>
+                        <button class="ml-2" onclick="navigator.clipboard.writeText('V-19254775')">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400"
+                                viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                                <path
+                                    d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+              <form method="POST" action="{% url 'registration_order' %}" enctype="multipart/form-data" >
+                    {% csrf_token %}
+                    
+                    <h2 class="dark:text-white text-center">Datos de la Orden</h2>
+                     {% for i in contexto %}
+                        
+                            
+                        
+                    <label for="cedula" hidden>Cédula del Empleado (Order):</label>
+                    <input type="text" class="w-full p-2 border border-gray-300 rounded-md text-center" id="cedula" name="cedula" value="{{ i.cedula }}" hidden><br>
+                    <input type="hidden" name="extras" value="1"> 
+                    {% endfor %}
+                    <label for="special_event" class="dark:text-white" hidden>Evento Especial (Si/No):</label>
+                    <input type="text" class="w-full p-2 border border-gray-300 rounded-md text-center" id="special_event" name="special_event" value="no" required hidden><br>
+
+                    <label for="authorized" class="dark:text-white" >Autorizado (Si/No):</label>
+                    <input type="text" class="w-full p-2 border border-gray-300 rounded-md text-center" id="authorized" name="authorized" required><br>
+                    
+                    <label for="authorized_person" class="dark:text-white">Persona Autorizada:</label>
+                    <input type="text" class="w-full p-2 border border-gray-300 rounded-md text-center" id="authorized_person" name="authorized_person"><br>
+
+                    <label for="id_payment_method" hidden>Método de Pago ID:</label>
+                    <input type="number" class="w-full p-2 border border-gray-300 rounded-md text-center" id="id_payment_method" name="id_payment_method" value="2" required hidden> <br>
+
+                    <label for="reference" class="dark:text-white">Referencia/Número de Transacción:</label>
+                    <input type="number" step="any" class="w-full p-2 border border-gray-300 rounded-md text-center" id="reference" name="reference" required><br>
+
+                    <label for="total_amount" hidden>Monto Total:</label>
+                    <input type="hidden" class="w-full p-2 border border-gray-300 rounded-md text-center" step="0.01" id="total_amount" name="total_amount" value="{{ total_general }}" required><br>
+
+                    <label for="payment_support" class="dark:text-white">Soporte de Pago (PNG/JPG):</label>
+                    <input type="file" class="w-full p-2 border border-gray-300 rounded-md text-center" id="payment_support" name="payment_support" accept="image/png,image/jpeg" required><br>
+
+                    <input type="hidden" name="id_order_status" value="2"> 
+                    <input type="hidden" name="id_orders_consumption" value="2">
+  
+
+                    
+                    <h2 class="dark:text-white text-lg">Datos del Empleado que Paga/Solicita (employeePayment)</h2>
+
+                    <label for="cedula_employee" class="dark:text-white">Cédula Empleado:</label>
+                    <input type="text" class="w-full p-2 border border-gray-300 rounded-md text-center" id="cedula_employee" name="cedula_employee" required><br>
+
+                    <label for="name_employee" class="dark:text-white">Nombre Empleado:</label>
+                    <input type="text" class="w-full p-2 border border-gray-300 rounded-md text-center" id="name_employee" name="name_employee" required><br>
+
+                    <label for="phone_employee" class="dark:text-white">Teléfono Empleado:</label>
+                    <input type="text" class="w-full p-2 border border-gray-300 rounded-md text-center" id="phone_employee" name="phone_employee"><br>
+
+                    <label for="management" class="dark:text-white">Gerencia/Departamento:</label>
+                    <input type="text" class="w-full p-2 border border-gray-300 rounded-md text-center" id="management" name="management" required><br>
+
+                </div>
+                    <br>
+                    <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 gap-4">Registrar Orden</button>
+                    <br>
+                    <br>
+                     <button  class="w-full bg-green-500 text-white p-2 rounded-md hover:bg-blue-600" data-bs-dismiss="modal">Cancelar</button>
+                </form>
+               
+    </div>
+</div>

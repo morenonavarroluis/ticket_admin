@@ -1,0 +1,52 @@
+###  USUARIOS
+POST http://comedor.mercal.gob.ve/api/p1/users HTTP/1.1
+content-type: application/json
+Authorization: Bearer 19|DFTkw5NfIZLijIfnPxKibyDYOuOmye2acRuZHcLifa4a32ac
+
+{
+    "email": "username@mercal.gob.ve", 
+    "password": "12345678",
+    "password_confirmation": "12345678",
+    "cedula":"18933323"     
+}
+
+
+### MENU
+GET  http://comedor.mercal.gob.ve/api/p1/users HTTP/1.1
+content-type: application/json
+Authorization: Bearer 89|8vpe1YxGhDuCDT8HVEByi3mdlIbCAr50ddCAzbc247edbb14
+### ORDERS
+GET  http://comedor.mercal.gob.ve/api/p1/ordersDay HTTP/1.1
+content-type: application/json
+Authorization: Bearer 4|PhHUm6mN38MfxveJYNtXSYOZiskHzLvF35rluXK9f8907822
+### EXTRAS
+GET http://comedor.mercal.gob.ve/api/p1/extras HTTP/1.1
+content-type: application/json
+Authorization: Bearer 2|gmqPYO0NiFeqiFYqgtTTnqmMFxUPwQMpbqdBzRJiaf07aac4
+### GERENCIAS TODAS
+GET http://comedor.mercal.gob.ve/api/p1/gerencias HTTP/1.1
+content-type: application/json
+Authorization: Bearer 4|HzW2YI4FVZwN2c6aX3MqppZlGkYEZEoQxfu108vD5f2c5289
+###  GERENCIA x ID
+GET http://comedor.mercal.gob.ve/api/p1/gerencias/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer 4|HzW2YI4FVZwN2c6aX3MqppZlGkYEZEoQxfu108vD5f2c5289
+###  PEDIDOS
+GET http://comedor.mercal.gob.ve/api/p1/pedidos HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer 66|MRFvRnfNekycUJZKa4NFlDP1jFAsifmRM1VxMjnx36930f36
+
+
+###  EMPLEADOS
+GET http://10.20.22.88:8000/api/p1/bank HTTP/1.1
+content-type: application/json
+Authorization: Bearer 5|CtcVUPfwVNVBbKwtc7HzV5R7wXuLZEowFfFUYOcz57957f3a
+*******************************POSTS******************************
+#### LOGIN
+POST https://comedor.mercal.gob.ve/api/p1/users/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "moicastillo@mercal.gob.ve",
+    "password": "12345678"
+}

@@ -1,0 +1,67 @@
+{% extends 'bases/base_dashboard.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="max-w-6xl mx-auto p-2">
+
+    <div>
+        <h1 class="text-2xl font-bold mb-4 text-center dark:text-white">Empleados</h1>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2 py-6">
+
+
+        <div class="flex-1">
+
+            <div class="controls">
+                <input type="text" id="searchInput" class="rounded-md py-1 " placeholder="Buscar usuario...">
+                <select id="rowsPerPage" class="rounded-md py-2">
+                    <option value="5">5 por página</option>
+                    <option value="10">10 por página</option>
+                    <option value="20">20 por página</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    {% csrf_token %}
+    <div class="overflow-x-auto max-h-96 overflow-y-auto bg-white dark:bg-dark-100 rounded-lg shadow-md">
+        <table class="responsive-table w-full" id="myTable">
+            <thead class="bg-gray-100 dark:bg-dark-200">
+                <tr>
+                    <th class="py-3 px-4 text-center dark:text-white">Gerencias</th>
+                    <th class="py-3 px-4 text-center dark:text-white">Cedula</th>
+                    <th class="py-3 px-4 text-center dark:text-white">Nombres</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for em in data_principal %}
+                <tr>
+                    <td class="py-3 px-4 text-center dark:text-white">{{ em.management }}</td>
+                    <td class="py-3 px-4 text-center dark:text-white">{{ em.cedula }}</td>
+                    <td class="py-3 px-4 text-center dark:text-white">{{ em.full_name }}</td>
+
+                </tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        
+    </div>
+        <div class="pagination-controls flex justify-center items-center gap-4 my-4">
+            <button class="py-2 px-2 bg-blue-600 text-white rounded-lg" id="prevBtn" type="button">Anterior</button>
+            <h6 id="pageNumbers" class="dark:text-white text-lg "></h6>
+            <button class="py-2 px-2 bg-blue-600 text-white rounded-lg" id="nextBtn" type="button">Siguiente</button>
+        </div>
+
+
+</div>
+<script src="{% static 'js/empleados.js' %}"></script>
+
+{% endblock %}

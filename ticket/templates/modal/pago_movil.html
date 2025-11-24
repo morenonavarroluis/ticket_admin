@@ -1,0 +1,132 @@
+<div class="modal fade" id="movil" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content dark:bg-gray-800 rounded-xl shadow-2xl p-4 sm:p-6">
+            
+            <div class="modal-header border-b-0 pb-2 flex-col items-center">
+                <button type="button" class="btn-close absolute top-3 right-3 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+                    data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                <h5 class="modal-title dark:text-gray-100 text-2xl font-extrabold text-center w-full mt-2" id="staticBackdropLabel">
+                    Total a Pagar
+                </h5>
+                <p class="text-4xl font-black text-green-500 mt-1">Bs. {{ total_general }}</p>
+            </div>
+            
+            <div class="modal-body pt-4 max-h-[70vh] overflow-y-auto space-y-6">
+
+                <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-inner">
+                    <h3 class="text-lg font-bold text-center mb-4 text-blue-800 dark:text-blue-300">
+                        📱 Datos Pago Móvil
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center text-gray-700 dark:text-gray-300">
+                            <span class="font-medium">Número de Teléfono:</span>
+                            <div class="flex items-center">
+                                <span class="font-semibold text-right">0414-2418171</span>
+                                <button class="ml-2 p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition" 
+                                        aria-label="Copiar teléfono" onclick="navigator.clipboard.writeText('0414-2418171')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 dark:text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                                        <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center text-gray-700 dark:text-gray-300 border-t border-gray-300 dark:border-gray-600 pt-2">
+                            <span class="font-medium">Banco:</span>
+                            <div class="flex items-center">
+                                <span class="font-semibold text-right">0108 - Provincial</span>
+                                <button class="ml-2 p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition" 
+                                        aria-label="Copiar código de banco" onclick="navigator.clipboard.writeText('0108')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 dark:text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                                        <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center text-gray-700 dark:text-gray-300 border-t border-gray-300 dark:border-gray-600 pt-2">
+                            <span class="font-medium">Cédula:</span>
+                            <div class="flex items-center">
+                                <span class="font-semibold text-right">V-19.254.775</span>
+                                <button class="ml-2 p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition" 
+                                        aria-label="Copiar cédula" onclick="navigator.clipboard.writeText('V-19254775')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 dark:text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                                        <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form method="POST" action="{% url 'registration_order' %}" class="space-y-4">
+                    {% csrf_token %}
+                    
+                    <h2 class="dark:text-white text-xl font-bold text-center pt-2">Datos de la Orden</h2>
+
+                    {% for i in contexto %}
+                        <input type="hidden" name="cedula" value="{{ i.cedula }}">
+                        <input type="hidden" name="extras" value="1">
+                    {% endfor %}
+                    <input type="hidden" name="id_payment_method" value="3">
+                    <input type="hidden" name="total_amount" value="{{ total_general }}">
+                    <input type="hidden" name="id_order_status" value="2"> 
+                    <input type="hidden" name="id_orders_consumption" value="2">
+                    
+                    <div>
+                        <label for="authorized" class="dark:text-gray-300 font-medium mb-1 block">Autorizado (Si/No):</label>
+                        <input type="text" class="w-full p-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md focus:ring-blue-500 focus:border-blue-500 text-center" id="authorized" name="authorized" required>
+                    </div>
+                    
+                    <div>
+                        <label for="authorized_person" class="dark:text-gray-300 font-medium mb-1 block">Persona Autorizada:</label>
+                        <input type="text" class="w-full p-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md focus:ring-blue-500 focus:border-blue-500 text-center" id="authorized_person" name="authorized_person">
+                    </div>
+
+                    <div>
+                        <label for="reference" class="dark:text-gray-300 font-medium mb-1 block">Referencia/Número de Transacción:</label>
+                        <input type="number" step="any" class="w-full p-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md focus:ring-blue-500 focus:border-blue-500 text-center" id="reference" name="reference" required>
+                    </div>
+
+                    <h2 class="dark:text-white text-xl font-bold text-center pt-4 border-t border-gray-300 dark:border-gray-600 mt-6">
+                        Datos del Empleado que Paga
+                    </h2>
+
+                    <div>
+                        <label for="cedula_employee" class="dark:text-gray-300 font-medium mb-1 block">Cédula Empleado:</label>
+                        <input type="text" class="w-full p-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md focus:ring-blue-500 focus:border-blue-500 text-center" id="cedula_employee" name="cedula_employee" required>
+                    </div>
+
+                    <div>
+                        <label for="phone_employee" class="dark:text-gray-300 font-medium mb-1 block">Teléfono Empleado:</label>
+                        <input type="text" class="w-full p-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md focus:ring-blue-500 focus:border-blue-500 text-center" id="phone_employee" name="phone_employee">
+                    </div>
+                   <div>
+                        <label for="phone_employee" class="dark:text-gray-300 font-medium mb-1 block">Banco de envio</label>
+                        <select required name="bank" class="w-full p-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md focus:ring-blue-500 focus:border-blue-500 text-center">
+                            <option>seleccione un banco</option>
+                            {% for b in bank %}
+                                <option value="{{ b.code_bank }}">{{ b.name_bank }} - {{ b.code_bank }}</option>
+                            {% endfor %}
+                        </select>
+                      
+                    </div>
+                    
+
+                    <div class="pt-6 space-y-3">
+                        <button type="submit" class="w-full bg-blue-600 text-white font-semibold p-3 rounded-lg hover:bg-blue-700 transition duration-200 shadow-md">
+                            ✅ Registrar Orden
+                        </button>
+                        <button type="button" class="w-full bg-red-500 text-white font-semibold p-3 rounded-lg hover:bg-red-600 transition duration-200 shadow-md" data-bs-dismiss="modal">
+                            ❌ Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

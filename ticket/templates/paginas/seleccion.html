@@ -1,0 +1,89 @@
+{% extends 'bases/base_dashboard.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="max-w-6xl mx-auto p-2">
+
+    <div>
+        <h1 class="text-2xl font-bold mb-4 text-center dark:text-white">Carga de Pedidos</h1>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2 py-6">
+
+
+        <div class="flex-1">
+
+            <div class="controls">
+                <input type="text" id="searchInput" class="rounded-md py-1 " placeholder="Buscar usuario...">
+                <select id="rowsPerPage" class="rounded-md py-2">
+                    <option value="5">5 por página</option>
+                    <option value="10">10 por página</option>
+                    <option value="20">20 por página</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <form action="resumen" method="POST" id="resumen-form">
+        {% csrf_token %}
+        <div class="overflow-x-auto max-h-96 overflow-y-auto  bg-white dark:bg-dark-100 rounded-lg shadow-md">
+            <table class="responsive-table w-full" id="myTable">
+                <thead class="bg-gray-100 dark:bg-dark-200">
+                    <tr>
+                        <th class="py-3 px-4 text-center dark:text-white" hidden>Gerencias</th>
+                        <th class="py-3 px-4 text-center dark:text-white" >Cedula</th>
+                        <th class="py-3 px-4 text-center dark:text-white">Nombre y Apellido</th>
+                        <th class="py-3 px-4 text-center dark:text-white">Almuerzo Bs</th>
+                        <th class="py-3 px-4 text-center dark:text-white">Para llevar Bs</th>
+                        <th class="py-3 px-4 text-center dark:text-white">cubiertos Bs</th>
+                        <th class="py-3 px-4 text-center dark:text-white" hidden>total a pagar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                    {% for em in employees %}
+                    <tr data-employee-id="{{ em.id }}" data-employee-name="{{ em.full_name }}"
+                        data-employee-index="{{ forloop.counter0 }}" data-employee-cedula="{{ em.cedula }}">
+                      
+                        <td class="py-3 px-4 text-center dark:text-white" hidden data-label="Gerencias">{{ em.gerencias.management_name }}</td>
+                        <td class="py-3 px-4 text-center dark:text-white" data-label="Cedula" >{{ em.cedula }}</td>
+                        
+                        <td class="py-3 px-4 text-center dark:text-white" data-label="Nombre" >{{ em.full_name }}</td>
+                        <td class="py-3 px-4 text-center dark:text-white" data-label="Comida">
+                            <input id="lunch" type="checkbox" class="selection-checkbox" data-selection-type="lunch" value="{{ bcv_rate}}">
+                        </td>
+                        <td class="py-3 px-4 text-center dark:text-white" data-label="Para llevar">
+                            <input id="to_go" type="checkbox" class="selection-checkbox" data-selection-type="to_go" value="15" >
+                        </td>
+                        <td class="py-3 px-4 text-center dark:text-white" data-label="Cubiertos">
+                            <input id="covered" type="checkbox" class="selection-checkbox" data-selection-type="covered" value="10">
+                        </td>
+                        <input id="total" type="text" name="total_pago"  value="0" hidden>
+                        
+                       
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            <div class="pagination-controls flex justify-center items-center gap-4 my-4">
+                <button id="prevBtn" class="bg-blue-800 rounded-md dark:text-white px-2 py-2" type="button">Anterior</button>
+                <h6 id="pageNumbers" class="dark:text-white"></h6>
+                <button id="nextBtn" class="bg-blue-800 rounded-md dark:text-white px-2 py-2" type="button">Siguiente</button>
+            </div>
+
+        </div>
+        
+        <div class="flex justify-center mt-6">
+            <button type="submit" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg">
+                Resumen y Pago
+            </button>
+        </div>
+       
+    </form>
+</div>
+<script src="{% static 'js/suma.js' %}"></script>
+<script src="{% static 'js/buscador.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'bases/base_dashboard.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="max-w-6xl mx-auto p-2">
+
+    <div>
+        <h1 class="text-2xl font-bold mb-4 text-center dark:text-white">Gestion de Pedido</h1>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2 py-6">
+
+
+        <div class="flex-1">
+
+            <div class="controls">
+                <input type="text" id="searchInput" class="rounded-md py-1 " placeholder="Buscar usuario...">
+                <select id="rowsPerPage" class="rounded-md py-2">
+                    <option value="5">5 por página</option>
+                    <option value="10">10 por página</option>
+                    <option value="20">20 por página</option>
+                </select>
+            </div>
+        </div>
+       
+    </div>
+    
+        {% csrf_token %}
+        <div class="overflow-x-auto bg-white dark:bg-dark-100 rounded-lg shadow-md">
+           <table class="responsive-table w-full bg-white dark:bg-dark-100" id="myTable">
+    
+            <thead class="bg-gray-100 dark:bg-dark-200">
+                <tr>
+                    <th class="py-3 px-4 text-center text-gray-700 dark:text-white">Nº de Pedido</th>
+                    <th class="py-3 px-4 text-center text-gray-700 dark:text-white">Personas Autorizada</th>
+                    <th class="py-3 px-4 text-center text-gray-700 dark:text-white">Nombre y Apellido</th>
+                    <th class="py-3 px-4 text-center text-gray-700 dark:text-white">Cedula</th>
+                   
+                    <th class="py-3 px-4 text-center text-gray-700 dark:text-white">Metodo de pago</th>
+                    <th class="py-3 px-4 text-center text-gray-700 dark:text-white">Referencia</th>
+                    <th class="py-3 px-4 text-center text-gray-700 dark:text-white" >total a pagar</th>
+                    <th class="py-3 px-4 text-center text-gray-700 dark:text-white">Accion</th>
+                </tr>
+            </thead>
+            
+            <tbody class="text-gray-900 dark:text-gray-200">
+                {% for pedido in pedidos %}
+                
+                <tr class="bg-white border-b border-gray-200 hover:bg-gray-50 dark:bg-dark-100 dark:border-dark-200 dark:hover:bg-dark-200" 
+                    data-employee-id="{{ em.id }}" data-employee-name="{{ em.first_name }}"
+                    data-employee-index="{{ forloop.counter0 }}">
+                    
+                    <td class="py-3 px-4 text-center" data-label="Orden">{{ pedido.number_order }}</td>
+                    <td class="py-3 px-4 text-center" data-label="Autorizado">{{ pedido.authorized_person }}</td>
+                    <td class="py-3 px-4 text-center" data-label="Nombres"> {{ pedido.employee_payment.employee.first_name }}</td>
+                    <td class="py-3 px-4 text-center" data-label="Cedula">{{ pedido.employee_payment.cedula_employee }}</td>
+                    <td class="py-3 px-4 text-center" data-label="Metodo de pago">{{ pedido.payment_method.payment_method }}</td>
+                    <td class="py-3 px-4 text-center" data-label="Referencia">{{ pedido.reference }}</td>
+                    <td class="py-3 px-4 text-center" data-label="total a pagar">{{ pedido.total_amount }}</td>
+                    <td  data-label="Accion"><button class="py-1 px-2 bg-blue-600 text-white rounded-lg" data-bs-toggle="modal" data-bs-target="#VerPedido{{ pedido.number_order }}"
+                        >ver mas</button></td>
+                </tr>
+                {% include 'modal/pedido.html' %}
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+ 
+        </div>
+        <div class="pagination-controls flex justify-center items-center gap-4 my-4">
+                <button id="prevBtn" class="bg-blue-800 rounded-md dark:text-white px-2 py-2" type="button">Anterior</button>
+                <h6 id="pageNumbers" class="dark:text-white"></h6>
+                <button id="nextBtn" class="bg-blue-800 rounded-md dark:text-white px-2 py-2" type="button">Siguiente</button>
+        </div>
+  
+</div>
+
+
+<script src="{% static 'js/empleados.js' %}"></script>
+{% endblock %}

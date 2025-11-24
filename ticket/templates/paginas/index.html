@@ -1,0 +1,110 @@
+{% extends 'bases/base_dashboard.html' %}
+
+{% block content %}
+
+<main class="p-20">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+        <div class="card bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-indigo-100 dark:bg-indigo-900 mr-4">
+                    <i class="fas fa-users text-indigo-500 dark:text-indigo-300"></i>
+                </div>
+                <div>
+                    {% if number > 0 %}
+                    <p class="text-gray-500 dark:text-gray-400 text-sm">Usuarios Totales</p>
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white">{{ number }}</h3>
+                    {% else %}
+                    <p class="text-gray-500 dark:text-gray-400 text-sm">No se encontraron usuarios o hubo un error.</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="card bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-green-100 dark:bg-green-900 mr-4">
+                    <i class="fas fa-shopping-cart text-green-500 dark:text-green-300"></i>
+                </div>
+                <div>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm">Ventas de hoy</p>
+                    
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white">Bs. {{ total_sales }}</h3>
+                   
+                   
+                    
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="card bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-red-100 dark:bg-red-900 mr-4">
+                    <i class="fas fa-chart-line text-red-500 dark:text-red-300"></i>
+                </div>
+                <div>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm">Tickets consumidos</p>
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white">{{ contador_tickets_3 }}</h3>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- <div class="lg:col-span-2">
+            <div class="card bg-white dark:bg-gray-800 rounded-lg shadow p-6 h-full">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-semibold text-gray-800 dark:text-white">Actividad Reciente</h2>
+                    <button class="text-indigo-500 hover:text-indigo-700 dark:hover:text-indigo-400">
+                        Ver todos
+                    </button>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <img src="https://placehold.co/40"
+                            alt="Usuario femenino con cabello castaño claro y blusa rosa en fondo claro"
+                            class="rounded-full w-10 h-10">
+                        <div class="ml-4">
+                            <h4 class="font-medium text-gray-800 dark:text-white">María González</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Completó el registro de nuevo usuario
+                            </p>
+                            <p class="text-xs text-gray-400">Hace 5 minutos</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start">
+                        <img src="https://placehold.co/40" alt="Usuario masculino con gafas y camisa azul en oficina"
+                            class="rounded-full w-10 h-10">
+                        <div class="ml-4">
+                            <h4 class="font-medium text-gray-800 dark:text-white">Carlos Ruiz</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Realizó una compra de $125.00</p>
+                            <p class="text-xs text-gray-400">Hace 1 hora</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start">
+                        <img src="https://placehold.co/40"
+                            alt="Usuario masculino con sombrero y camisa a cuadros estilo casual"
+                            class="rounded-full w-10 h-10">
+                        <div class="ml-4">
+                            <h4 class="font-medium text-gray-800 dark:text-white">Roberto Sánchez</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Actualizó su información de perfil</p>
+                            <p class="text-xs text-gray-400">Hace 2 horas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <div>
+            <div class="card bg-white dark:bg-gray-800 rounded-lg shadow p-6 h-full">
+                     <img src="{% url 'progreso-grafico' %}" alt="Gráfico de Progreso Mensual">
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
