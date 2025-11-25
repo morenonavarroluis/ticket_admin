@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/
 import os
 
 from django.core.wsgi import get_wsgi_application
-
+#os.environ ['API'] = 'https://comedor.mercal.gob.ve/api/p1'
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'panel.settings')
 
 application = get_wsgi_application()

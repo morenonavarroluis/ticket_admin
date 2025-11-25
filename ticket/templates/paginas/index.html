@@ -53,58 +53,47 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- <div class="lg:col-span-2">
+        <div class="lg:col-span-2">
             <div class="card bg-white dark:bg-gray-800 rounded-lg shadow p-6 h-full">
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-lg font-semibold text-gray-800 dark:text-white">Actividad Reciente</h2>
-                    <button class="text-indigo-500 hover:text-indigo-700 dark:hover:text-indigo-400">
-                        Ver todos
-                    </button>
+                    <h2 class="text-lg font-semibold text-gray-800 dark:text-white">2015 Sales</h2>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">All products including Taxes</p>
                 </div>
 
-                <div class="space-y-4">
-                    <div class="flex items-start">
-                        <img src="https://placehold.co/40"
-                            alt="Usuario femenino con cabello castaño claro y blusa rosa en fondo claro"
-                            class="rounded-full w-10 h-10">
-                        <div class="ml-4">
-                            <h4 class="font-medium text-gray-800 dark:text-white">María González</h4>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Completó el registro de nuevo usuario
-                            </p>
-                            <p class="text-xs text-gray-400">Hace 5 minutos</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start">
-                        <img src="https://placehold.co/40" alt="Usuario masculino con gafas y camisa azul en oficina"
-                            class="rounded-full w-10 h-10">
-                        <div class="ml-4">
-                            <h4 class="font-medium text-gray-800 dark:text-white">Carlos Ruiz</h4>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Realizó una compra de $125.00</p>
-                            <p class="text-xs text-gray-400">Hace 1 hora</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start">
-                        <img src="https://placehold.co/40"
-                            alt="Usuario masculino con sombrero y camisa a cuadros estilo casual"
-                            class="rounded-full w-10 h-10">
-                        <div class="ml-4">
-                            <h4 class="font-medium text-gray-800 dark:text-white">Roberto Sánchez</h4>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Actualizó su información de perfil</p>
-                            <p class="text-xs text-gray-400">Hace 2 horas</p>
-                        </div>
-                    </div>
+                <div class="h-80">
+                    <canvas id="salesChart" class="h-full w-full"></canvas>
+                </div>
+            
+                <div class="mt-4 text-xs text-gray-500 dark:text-gray-400">
+                    <span class="text-green-500 mr-2">✓</span>Data information certified
                 </div>
             </div>
-        </div> -->
+        </div>
 
-        <div>
-            <div class="card bg-white dark:bg-gray-800 rounded-lg shadow p-6 h-full">
-                     <img src="{% url 'progreso-grafico' %}" alt="Gráfico de Progreso Mensual">
+        <div class="relative h-52 w-52 mx-auto">
+            
+            <canvas id="dailySalesGoalChart"></canvas>
+            
+            <div id="centerText" 
+                class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                
+                <span id="percentageValue" 
+                    class="text-4xl font-bold text-green-500 dark:text-green-400">
+                </span>
+                
+                <span class="text-sm text-gray-500 dark:text-gray-400">
+                    Objetivo
+                </span>
             </div>
         </div>
     </div>
 </main>
+{{ orders|json_script:"orders-data" }}
+
+{{ progreso_data.vendidos|json_script:"total-sold" }} 
+
+{{ progreso_data.restante|json_script:"daily-sales-limit" }}
+
+{{ progreso_data.limite|json_script:"remaining-limit" }}
 
 {% endblock %}

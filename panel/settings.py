@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-$6#$)z!u(nz*7%(h(^fofh5r$l5@*s(ldv1jp+wg3^xkpf+*a*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','10.20.22.93','127.0.0.1']
+ALLOWED_HOSTS = ['localhost','10.20.22.93','127.0.0.1','ticketadmin.mercal.gob.ve']
 
 API = os.environ.get("API")
 

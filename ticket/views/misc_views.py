@@ -11,104 +11,156 @@ from datetime import date
 api_url = settings.API
 
 
+def get_api_headers(request):
+    """Obtiene los encabezados de autorización de la sesión."""
+    token = request.session.get('api_token')
+    return {'Authorization': f'Bearer {token}'}
+
+def fetch_api_data(url, headers, params=None):
+    """Función genérica para realizar una llamada GET a la API con manejo de errores."""
+    try:
+        response = requests.get(
+            url, 
+            headers=headers, 
+            params=params if params else {}, 
+            timeout=10
+        )
+        response.raise_for_status() 
+        return response.json()
+    except (ConnectionError, HTTPError, Timeout) as e:
+        # Aquí puedes loggear el error más detalladamente si es necesario
+        print(f"Error al conectar/obtener de la API ({url}): {e}")
+        return None
+    except Exception as e:
+        print(f"Error inesperado al obtener de la API ({url}): {e}")
+        return None
+
+def get_user_data(api_url, headers):
+    """Obtiene la lista de usuarios y cuenta cuántos hay."""
+    
+    url = f"{api_url}/users"
+    json_data = fetch_api_data(url, headers)
+    
+    if json_data is None:
+        return 0, []
+        
+    users = json_data.get('data', [])
+    number = len(users)
+    return number, users
+    
+def calculate_daily_sales(api_url, headers):
+    """Obtiene los pedidos de hoy y calcula el total de ventas."""
+    
+    hoy = date.today().isoformat()
+    endpoint = f"{api_url}/pedidos"
+    params = {'fecha': hoy} 
+    
+    json_data = fetch_api_data(endpoint, headers, params)
+    
+    if json_data is None:
+        return 0.0
+        
+    orders = json_data.get('orders', []) 
+    total_sales = 0.0
+    
+    for order in orders:
+        try:
+            amount = float(order.get('total_amount', 0.0)) 
+            total_sales += int(amount)
+        except (ValueError, TypeError):
+            # Si el monto es inválido, registramos y seguimos
+            print(f"Advertencia: Pedido con monto inválido detectado.") 
+            continue
+            
+    return total_sales
+
+def count_tickets_by_consumption(api_url, headers, consumption_id=3):
+    """Cuenta los pedidos que tienen un ID de consumo específico."""
+    
+    url = f"{api_url}/pedidos"
+    json_data = fetch_api_data(url, headers)
+    
+    if json_data is None:
+        return 0
+    
+    data_pedidos = json_data.get('orders', []) 
+    contador_tickets = 0
+    
+    for pedido in data_pedidos:
+        # Acceder de forma segura a datos anidados
+        consumo_data = pedido.get('order_consumption', {}) 
+        consumido_number = consumo_data.get('id_orders_consumption')
+        
+        if consumido_number == consumption_id:
+            contador_tickets += 1
+            
+    return contador_tickets
+
+def get_orders_data(api_url, headers):
+   url = f"{api_url}/pedidos/monthlyConsumption"
+   json_data = fetch_api_data(url, headers)
+   if json_data is None:
+         return []
+     
+   orders = json_data.get('orders', []) 
+   return orders
+
+def progreso(api_url, headers):
+    url = f"{api_url}/ordersDay"
+    json_data = fetch_api_data(url, headers)
+    if json_data is None:
+        return []
+    limite = json_data.get("totalAllowed", 0) 
+    vendidos = json_data.get("totalSold", 0)     
+    restante = json_data.get("remainingTotal", 0)
+    progreso_data = {
+        'limite': limite,
+        'vendidos': vendidos,
+        'restante': restante
+    }
+    
+    return progreso_data
+    
 def index(request):
+    """
+    Vista principal del dashboard.
+    Requiere autenticación, obtiene datos de usuarios, ventas diarias y tickets por consumo.
+    """
+    
+    # 1. **Manejo de Autenticación**
     if 'api_token' not in request.session:
         messages.warning(request, "Debe iniciar sesión para ver esta información.")
         return redirect('inicio')  
     
-    token = request.session.get('api_token')
-    headers = {
-        'Authorization': f'Bearer {token}'
-    }
+    headers = get_api_headers(request)
     
-    try:
-        response = requests.get(f"{api_url}/users", headers=headers, timeout=10)
-        response.raise_for_status() 
-        json_data = response.json()
-        user = json_data.get('data', [])
-        number = len(user)
-        
-    except (ConnectionError, HTTPError, Timeout) as e:
-        print(f"Error al conectar con la API: {e}")
-        number = 0
-        json_data = []
+    # 2. **Obtención y Procesamiento de Datos de la API**
     
+    # Datos de Usuarios
+    number, user_data_list = get_user_data(api_url, headers)
     
-    hoy = date.today().isoformat()
-    total_sales = 0.0 
+    # Ventas Diarias
+    total_sales = calculate_daily_sales(api_url, headers)
     
-    try:
-        
-        endpoint = f"{api_url}/pedidos"
-        params = {'fecha': hoy} 
-        
-        response = requests.get(
-            endpoint, 
-            headers=headers, 
-            params=params,
-            timeout=10
-        )
-        
-        response.raise_for_status() 
-        
-        json_data = response.json()
-        
-        orders = json_data.get('orders', []) 
-        if orders:
-            first_order = orders[0] 
-            date_order = first_order.get('date_order')
-            
-            
-                
-        for order in orders:
-           
-            try:
-                
-                amount = float(order.get('total_amount', 0.0)) 
-                total_sales += int(amount)
-                
-            except (ValueError, TypeError):
-                
-                print(f"Advertencia: Pedido con monto inválido: {order}") 
-                continue
-        
-        if date_order == params:
-                total_sales
-        
-    except requests.exceptions.HTTPError as http_err:
-       
-        error_msg = f"Error de la API al obtener pedidos"
+    # Conteo de Tickets (ID Consumo = 3)
+    contador_tickets_3 = count_tickets_by_consumption(api_url, headers, consumption_id=3)
     
-    try:
-        response = requests.get(f"{api_url}/pedidos", headers=headers, timeout=10)
-        response.raise_for_status() 
-        json_data = response.json()
-        data_pedidos = json_data.get('orders', []) 
-        contador_tickets_3 = 0
-        for pedido in data_pedidos:
-            
-            consumo_data = pedido.get('order_consumption', {}) 
-     
-            
-            consumido_number = consumo_data.get('id_orders_consumption')
-            
-            
-            if consumido_number == 3:
-                 
-                contador_tickets_3 += 1
-
-               
-            
-    except Exception as e:
-        print('errror')        
+    # recuperar datos de pedidos mensuales
+    orders = get_orders_data(api_url, headers)
+    
+    #recuperar progreso
+    progreso_data = progreso(api_url, headers)
+    
     contexto = {
+        'progreso_data':progreso_data,
         'number': number,
-        'datos_usuarios': json_data,  
-        'total_sales':total_sales,
-        'contador_tickets_3':contador_tickets_3,
+        'datos_usuarios': user_data_list,  
+        'total_sales': total_sales,
+        'contador_tickets_3': contador_tickets_3,
+        'orders': orders,
         'current_page': 'dashboard'
     }
-    print(total_sales)
+
     return render(request, 'paginas/index.html', contexto)
 
 def escaner(request):
@@ -226,52 +278,5 @@ def extras_unified_view(request):
     return render(request, "paginas/extras.html",contexto)
 
 def progreso_mensual_view(request):
-    if 'result' in request.session:
-        # 2. Recuperar el diccionario completo
-        session_data = request.session['result']
-   
-        # 3. Acceder a los datos individuales
-        resultado_previo = session_data['resultado']
-        total_all_previo = session_data['total_all']
-        date_previo = session_data['date']
-  
-    completado = date_previo
-    restante = resultado_previo - completado
+    pass
 
-    # Colores y etiquetas
-    colores = ['#6a5acd', '#464860']
-    etiquetas = ['Completado', 'Restante']
-
-    # Crear el gráfico de tarta (estilo donut)
-    fig, ax = plt.subplots(figsize=(6, 6))
-    ax.pie([completado, restante],
-           colors=colores,
-           startangle=90,
-           wedgeprops={'edgecolor': '#282c34', 'width': 0.3})
-
-    # Añadir el texto en el centro
-    ax.text(0, 0, f'{completado}%', ha='center', va='center', fontsize=40, color='green', weight='bold')
-    ax.text(0, -0.2, 'Objetivo', ha='center', va='center', fontsize=20, color='gray')
-
-    # Crear la leyenda
-    legend_elements = [
-        mpatches.Patch(facecolor=colores[0], label=f'{etiquetas[0]}   {completado}%'),
-        mpatches.Patch(facecolor=colores[1], label=f'{etiquetas[1]}   {restante}%')
-    ]
-    ax.legend(handles=legend_elements, loc='lower center', bbox_to_anchor=(0.5, -0.1),
-              ncol=1, frameon=False, fontsize=12, labelcolor='gray')
-
-    # Configurar el fondo y el título
-    fig.patch.set_facecolor('#282c34')
-    ax.set_facecolor('#282c34')
-    ax.set_title(f'Limite de venta del dia {total_all_previo}', fontsize=20, color='gray', weight='bold')
-    ax.axis('equal')
-
-    # Guardar el gráfico en un buffer en memoria en lugar de un archivo
-    buffer = BytesIO()
-    plt.savefig(buffer, format='png', dpi=300, bbox_inches='tight', transparent=True)
-    buffer.seek(0)
-    plt.close(fig) 
-
-    
-    return HttpResponse(buffer.getvalue(), content_type='image/png') 
