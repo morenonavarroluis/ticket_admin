@@ -89,6 +89,17 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'ticket',
+#         'USER': 'desarrollo',
+#         'PASSWORD' : 'mercaldev2025',
+#         'HOST': 'localhost',
+#         'PORT': '3306'
+#     }
+# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

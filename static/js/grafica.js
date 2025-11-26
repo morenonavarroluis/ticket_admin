@@ -38,11 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const labels = Object.keys(dailySales).sort();
     const orderAmounts = labels.map(day => dailySales[day].toFixed(2));
 
-    // *** DEBUGGING ***
-    console.log("Labels (Meses Agrupados):", labels);
-    console.log("Data (Montos Agrupados):", orderAmounts); 
-    // *****************
-    
+
     const ctx = document.getElementById('salesChart').getContext('2d');
 
     const salesChart = new Chart(ctx, {
@@ -63,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             ]
         },
+
         options: {
             responsive: true,
             maintainAspectRatio: false, 

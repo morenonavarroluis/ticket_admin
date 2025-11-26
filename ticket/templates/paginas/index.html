@@ -56,8 +56,10 @@
         <div class="lg:col-span-2">
             <div class="card bg-white dark:bg-gray-800 rounded-lg shadow p-6 h-full">
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-lg font-semibold text-gray-800 dark:text-white">2015 Sales</h2>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">All products including Taxes</p>
+                    <h2 class="text-lg font-semibold text-gray-800 dark:text-white">Ventas del Mes</h2>
+                    <!-- <p class="text-sm text-gray-900 dark:text-gray-400">
+                        <button class="py-1 px-2 bg-blue-500 dark:text-white rounded-md">Generar Reporte</button>
+                    </p> -->
                 </div>
 
                 <div class="h-80">
@@ -69,21 +71,21 @@
                 </div>
             </div>
         </div>
-
-        <div class="relative h-52 w-52 mx-auto">
+        
+        <div class="relative h-52 w-60 mx-auto shadow-lg rounded-md bg-white dark:bg-gray-800 flex items-center justify-center">
             
             <canvas id="dailySalesGoalChart"></canvas>
             
             <div id="centerText" 
                 class="absolute inset-0 flex flex-col items-center justify-center text-center">
-                
+                Limite de Ventas del Dia
                 <span id="percentageValue" 
-                    class="text-4xl font-bold text-green-500 dark:text-green-400">
+                class="text-4xl font-bold text-green-500 dark:text-green-400">
+                </span>
+                <span class="text-sm  dark:text-white">
+                    límite de pedido
                 </span>
                 
-                <span class="text-sm text-gray-500 dark:text-gray-400">
-                    Objetivo
-                </span>
             </div>
         </div>
     </div>

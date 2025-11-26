@@ -1,0 +1,171 @@
+ {% load static %}
+ <aside id="sidebar"
+            class="sidebar bg-white dark:bg-gray-800 **w-64** fixed top-0 left-0 h-full shadow-lg transition-transform transform -translate-x-full md:translate-x-0 **z-40**">
+            <div class="flex flex-col h-full">
+                <ul class="space-y-2 px-4">
+                    
+                    
+                    <li>
+                        <img class="h-auto w-full mt-15" src="{% static 'img/ticket.png' %}" alt="Logo de TicketLunch">
+                    </li>
+                    <br>
+                    <li>
+                        <a href="{% url 'index' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
+                                {% if current_page == 'dashboard' %}bg-blue-300 text-yellow-300 active{% endif %}">
+                            <i class="fas fa-tachometer-alt text-center text-gray-800 dark:text-white"></i>
+                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li>
+
+                        <a href="{% url 'usu' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
+
+                                {% if current_page == 'usuarios' %}bg-blue-300 text-white active{% endif %}">
+
+
+
+                            <i class="fa fa-user text-gray-800 dark:text-white" aria-hidden="true"></i>
+
+                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Usuarios</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="{% url 'menu' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
+
+                                {% if current_page == 'menu' %}bg-blue-300 text-white active{% endif %}">
+
+                            <i class="fa-solid fa-bars text-gray-800 dark:text-white"></i>
+
+                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Menu</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="{% url 'seleccion' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
+
+                                {% if current_page == 'seleccion' %}bg-blue-300 text-white active{% endif %}">
+
+                            <i class="fa-solid fa-check-double text-gray-800 dark:text-white"></i>
+
+                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Seleccion</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="{% url 'resumen' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
+
+                                {% if current_page == 'resumen' %}bg-blue-300 text-white active{% endif %}">
+
+                            <i class="fa-solid fa-money-bill-1-wave text-gray-800 dark:text-white"></i>
+
+                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Resumen de pagos</span>
+
+
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="{% url 'ticket' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
+
+                                {% if current_page == 'ticket' %}bg-blue-300 text-white active{% endif %}">
+
+                            <i class="fa-solid fa-ticket text-gray-800 dark:text-white"></i>
+
+                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Generar Ticket</span>
+
+
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="{% url 'empleados' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
+
+                                {% if current_page == 'empleados' %}bg-blue-300 text-white active{% endif %}">
+
+                            <i class="fas fa-users w-6 text-center text-gray-800 dark:text-white"></i>
+
+                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Empleados</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="{% url 'pedidos' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
+
+                                {% if current_page == 'pedidos' %}bg-blue-300 text-white active{% endif %}">
+
+
+
+                            <i class="fa-solid fa-sort dark:text-white"></i>
+
+                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Pedidos</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="{% url 'escaner' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
+
+                                {% if current_page == 'escaner' %}bg-blue-300 text-white active{% endif %}">
+
+                            <i class="fa fa-qrcode text-gray-800 dark:text-white" aria-hidden="true"></i>
+
+                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Escaner</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="{% url 'extras_unified_view' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
+
+                                {% if current_page == 'extras' %}bg-blue-300 text-white active{% endif %}">
+
+                            <i class="fa fa-cutlery text-gray-800 dark:text-white" aria-hidden="true"></i>
+
+                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Gestion del comedor</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="{% url 'logout_view' %}"
+                            class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors">
+
+                            <i class="fas fa-sign-out-alt w-6 text-center text-gray-800 dark:text-white"></i>
+
+                            <span class="menu-text ml-3 text-gray-800 dark:text-white">salir</span>
+
+                        </a>
+
+                    </li>
+
+
+
+                </ul>
+            </div>
+        </aside>

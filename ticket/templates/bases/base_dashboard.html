@@ -2,229 +2,23 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TickeAdmin</title>
-    <link rel="stylesheet" href="{% static 'css/modal.css' %}">
-    <link rel="shortcut icon" href="{% static 'img/logo.png' %}" type="image/x-icon">
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
-    <link rel="stylesheet" href="{% static 'sweetalert2/sweetalert2.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/output.css' %}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
-</head>
+{% include 'include/head.html' %}
 
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300" id="page-body"
     data-api-token="{{ request.session.api_token }}">
     <div class="flex min-h-screen">
 
 
-        <aside id="sidebar"
-            class="sidebar bg-white dark:bg-gray-800 **w-64** fixed top-0 left-0 h-full shadow-lg transition-transform transform -translate-x-full md:translate-x-0 **z-40**">
-            <div class="flex flex-col h-full">
-                <ul class="space-y-2 px-4">
-                    <li>
-                        <img class="h-auto w-full" src="{% static 'img/ticket.png' %}" alt="Logo de TicketLunch">
-                    </li>
-                    <li>
-                        <a href="{% url 'index' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-                                {% if current_page == 'dashboard' %}bg-blue-300 text-yellow-300 active{% endif %}">
-                            <i class="fas fa-tachometer-alt text-center text-gray-800 dark:text-white"></i>
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Dashboard</span>
-                        </a>
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'usu' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-
-                                {% if current_page == 'usuarios' %}bg-blue-300 text-white active{% endif %}">
-
-
-
-                            <i class="fa fa-user text-gray-800 dark:text-white" aria-hidden="true"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Usuarios</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'menu' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-
-                                {% if current_page == 'menu' %}bg-blue-300 text-white active{% endif %}">
-
-                            <i class="fa-solid fa-bars text-gray-800 dark:text-white"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Menu</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'seleccion' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-
-                                {% if current_page == 'seleccion' %}bg-blue-300 text-white active{% endif %}">
-
-                            <i class="fa-solid fa-check-double text-gray-800 dark:text-white"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Seleccion</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'resumen' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-
-                                {% if current_page == 'resumen' %}bg-blue-300 text-white active{% endif %}">
-
-                            <i class="fa-solid fa-money-bill-1-wave text-gray-800 dark:text-white"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Resumen de pagos</span>
-
-
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'ticket' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-
-                                {% if current_page == 'ticket' %}bg-blue-300 text-white active{% endif %}">
-
-                            <i class="fa-solid fa-ticket text-gray-800 dark:text-white"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Generar Ticket</span>
-
-
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'empleados' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-
-                                {% if current_page == 'empleados' %}bg-blue-300 text-white active{% endif %}">
-
-                            <i class="fas fa-users w-6 text-center text-gray-800 dark:text-white"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Empleados</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'pedidos' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-
-                                {% if current_page == 'pedidos' %}bg-blue-300 text-white active{% endif %}">
-
-
-
-                            <i class="fa-solid fa-sort dark:text-white"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Pedidos</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'escaner' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-
-                                {% if current_page == 'escaner' %}bg-blue-300 text-white active{% endif %}">
-
-                            <i class="fa fa-qrcode text-gray-800 dark:text-white" aria-hidden="true"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Escaner</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'extras_unified_view' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-
-                                {% if current_page == 'extras' %}bg-blue-300 text-white active{% endif %}">
-
-                            <i class="fa fa-cutlery text-gray-800 dark:text-white" aria-hidden="true"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Gestion del comedor</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'logout_view' %}"
-                            class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors">
-
-                            <i class="fas fa-sign-out-alt w-6 text-center text-gray-800 dark:text-white"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">salir</span>
-
-                        </a>
-
-                    </li>
-
-
-
-                </ul>
-            </div>
-        </aside>
+        {% include 'include/sidebar.html' %}
 
         <div id="main-content" class="main-content w-full min-h-screen **md:ml-64**">
-            <nav class="bg-white dark:bg-gray-800 shadow-sm **sticky top-0 z-30**">
-                <div class="flex items-center justify-between p-4">
-                    <div class="flex items-center">
-                        <button id="mobile-sidebar-toggle" class="mr-4 text-gray-500 dark:text-gray-300 md:hidden"
-                            onclick="toggleSidebar()">
-                            <i class="fas fa-bars text-xl"></i>
-                        </button>
-                        <h1 class="text-xl font-semibold text-gray-800 dark:text-white">Sistema Administrador</h1>
-                    </div>
-
-                    <div class="flex items-center space-x-4">
-                        <button onclick="toggleDarkMode()">
-                            
-
-                            <i class="fas fa-sun hidden dark:inline-block dark:text-yellow-300"></i>
-                        </button>
-
-                        
-
-                        
-                    </div>
-                </div>
-            </nav>
-
+            {% include 'include/navbar.html' %}
             {% block content %}
 
             {% endblock %}
         </div>
     </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="{% static 'sweetalert2/sweetalert2.all.min.js' %}"></script>
-<script src="{% static '/js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'js/enlace.js' %}"></script>
-<script src="{% static 'js/theme.js' %}"></script>
-<script src="{% static 'js/grafica.js' %}"></script>
-<script src="{% static 'js/grafico_redondo.js' %}"></script>
+{% include 'include/script.html' %}
 
 </html>
