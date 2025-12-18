@@ -308,11 +308,11 @@ def ticket(request):
     order_data = request.session.get('order_data_for_ticket', {})
     order_data_items = order_data.get('orders', [])
     
-    if not resumen_empleados:
-        messages.warning(request, "No hay empleados registrados para generar ticket.")
-        if 'order_data_for_ticket' in request.session:
-             del request.session['order_data_for_ticket']
-        return redirect('seleccion')
+    # if not resumen_empleados:
+    #     messages.warning(request, "No hay empleados registrados para generar ticket.")
+    #     if 'order_data_for_ticket' in request.session:
+    #          del request.session['order_data_for_ticket']
+    #     return redirect('seleccion')
 
     if len(resumen_empleados) != len(order_data_items):
         error_msg = f"Inconsistencia de datos: La API devolvió {len(order_data_items)} órdenes, pero hay {len(resumen_empleados)} empleados. Usando datos genéricos."

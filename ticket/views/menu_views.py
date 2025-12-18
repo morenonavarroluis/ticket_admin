@@ -130,9 +130,8 @@ def registro_menu(request):
         except Exception as e:
             # Manejar otros errores inesperados
             messages.error(request, f"Ocurrió un error inesperado: {e}")
-
-    # Renderiza la plantilla si el método no es POST
-    return render(request, 'paginas/menu.html')
+    messages.error(request,"Error al registrar ya hay un menu registrado")
+    return redirect('menu')
 
 def actualizar_menu(request, id_menu):
     if request.method == 'POST':

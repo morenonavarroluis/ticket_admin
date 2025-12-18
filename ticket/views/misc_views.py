@@ -122,10 +122,6 @@ def progreso(api_url, headers):
     return progreso_data
     
 def index(request):
-    """
-    Vista principal del dashboard.
-    Requiere autenticación, obtiene datos de usuarios, ventas diarias y tickets por consumo.
-    """
     
     # 1. **Manejo de Autenticación**
     if 'api_token' not in request.session:
@@ -160,7 +156,6 @@ def index(request):
         'orders': orders,
         'current_page': 'dashboard'
     }
-
     return render(request, 'paginas/index.html', contexto)
 
 def escaner(request):

@@ -4,8 +4,11 @@
 
 {% include 'include/head.html' %}
 
+
+
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300" id="page-body"
     data-api-token="{{ request.session.api_token }}">
+
     <div class="flex min-h-screen">
 
 
@@ -20,5 +23,15 @@
     </div>
 </body>
 {% include 'include/script.html' %}
-
+   {% if messages %}
+            {% for message in messages %}
+            <script>
+                Swal.fire({
+                    title: '{{ message.tags|title }}',
+                    text: '{{ message }}',
+                    icon: '{{ message.tags }}'
+                });
+            </script>
+            {% endfor %}
+    {% endif %}
 </html>

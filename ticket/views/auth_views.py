@@ -36,7 +36,7 @@ def inicio(request):
                     request.session['first_name'] = name
                     request.session['email'] = email
                     
-                    messages.success(request, '¡Inicio de sesión exitoso!')
+                    messages.success(request, 'Cargar ')
                     
                     return redirect('index')
                 else:

@@ -58,8 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     position: 'bottom',
                     labels: {
                         boxWidth: 10,
-                        padding: 20,
-                        // Función para personalizar el texto de la leyenda (mostrar porcentaje correcto)
+                        padding: 30,
                         color: 'rgb(107, 114, 128)' // Color del texto de la leyenda
                     }
                 },
