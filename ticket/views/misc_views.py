@@ -123,7 +123,6 @@ def progreso(api_url, headers):
     
 def index(request):
     
-    # 1. **Manejo de Autenticación**
     if 'api_token' not in request.session:
         messages.warning(request, "Debe iniciar sesión para ver esta información.")
         return redirect('inicio')  

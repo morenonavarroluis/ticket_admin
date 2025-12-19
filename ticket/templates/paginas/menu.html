@@ -10,7 +10,7 @@
                 Menú de hoy: {{ fecha_actual }}
             </h1>
             <p class="text-lg text-gray-500 dark:text-gray-400 mt-2">
-                Tasa BCV: <span class="font-semibold text-xl text-green-600 dark:text-green-400">Bs. 240.32</span>
+                Tasa BCV: <span class="font-semibold text-xl text-green-600 dark:text-green-400">Bs. {{ dolar }}</span>
             </p>
         </div>
         {% include 'modal/menu.html' %}
@@ -41,152 +41,180 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                 {% if grouped_menus.Sopas %}
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-blue-500">
-                    <div class="flex items-center mb-3">
-                        <span class="text-blue-500 text-2xl mr-3">🥣</span>
-                        <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100">Sopas</h3>
-                    </div>
-                    <ul class="space-y-1 text-gray-600 dark:text-gray-300">
-                        <li class="flex items-start">
-                            <span class="text-blue-500 mr-2">•</span> <span>{{ grouped_menus.Sopas.0 }}</span>
-                        </li>
-                        {% if grouped_menus.Sopas.1 %}
-                        <li class="flex items-start">
-                            <span class="text-blue-500 mr-2">•</span> <span>{{ grouped_menus.Sopas.1 }}</span>
-                        </li>
-                        {% endif %}
-                        {% if grouped_menus.Sopas.2 %}
-                        <li class="flex items-start">
-                            <span class="text-blue-500 mr-2">•</span> <span>{{ grouped_menus.Sopas.2 }}</span>
-                        </li>
-                        {% endif %}
-                    </ul>
+                <div class="group bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 border-t-4 border-blue-500 relative overflow-hidden">
+    
+                <div class="absolute top-4 right-4">
+                    <button class="flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-blue-500 hover:text-blue-700 dark:hover:text-blue-400 transition-colors">
+                        <span class="text-lg" data-bs-toggle="modal" data-bs-target="#menus">🖋️</span>
+                    </button>
                 </div>
-                {% endif %}
 
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg mr-3">
+                        <span class="text-2xl">🥣</span>
+                    </div>
+                    <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100 tracking-tight">Sopas</h3>
+                </div>
+
+                <ul class="space-y-2">
+                    {% for item in grouped_menus.Sopas|slice:":3" %}
+                    <li class="flex items-start text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+                        <span class="text-blue-500 mr-2 font-bold">•</span>
+                        <span class="text-sm leading-tight">{{ item }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+               
+            </div>
+                {% endif %}
                 {% if grouped_menus.Contornos %}
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-yellow-500">
-                    <div class="flex items-center mb-3">
-                        <span class="text-yellow-500 text-2xl mr-3">🍚</span>
-                        <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100">Contornos</h3>
-                    </div>
-                    <ul class="space-y-1 text-gray-600 dark:text-gray-300">
-                        <li class="flex items-start">
-                            <span class="text-yellow-500 mr-2">•</span> <span>{{ grouped_menus.Contornos.0 }}</span>
-                        </li>
-                        {% if grouped_menus.Contornos.1 %}
-                            <li class="flex items-start">
-                                <span class="text-yellow-500 mr-2">•</span> <span>{{ grouped_menus.Contornos.1 }}</span>
-                            </li>
-                        {% endif %}
-                        {% if grouped_menus.Contornos.2 %}
-                            <li class="flex items-start">
-                                <span class="text-yellow-500 mr-2">•</span> <span>{{ grouped_menus.Contornos.2 }}</span>
-                            </li>
-                        {% endif %}
-                    </ul>
+                <div class="group bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 border-t-4 border-yellow-500 relative overflow-hidden">
+    
+                <div class="absolute top-4 right-4 mb-3">
+                    <button class="flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-blue-500 hover:text-blue-700 dark:hover:text-blue-400 transition-colors">
+                        <span class="text-lg" data-bs-toggle="modal" data-bs-target="#menus">🖋️</span>
+                    </button>
                 </div>
-                {% endif %}
 
+               <div class="flex items-center mb-4 justify-start pt-4">
+                    <div class="p-1 bg-blue-50 dark:bg-blue-900/30 rounded-lg ">
+                        <span class="text-2xl text-yellow-500">🍚</span>
+                    </div>
+                    <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100 tracking-tight">Contornos</h3>
+                </div>
+
+                <ul class="space-y-2">
+                    {% for item in grouped_menus.Contornos|slice:":3" %}
+                    <li class="flex items-start text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+                        <span class="text-yellow-500 mr-2 font-bold">•</span>
+                        <span class="text-sm leading-tight">{{ item }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+               
+            </div>
+                {% endif %}
                 {% if grouped_menus.Proteinas %}
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-red-500">
-                    <div class="flex items-center mb-3">
-                        <span class="text-red-500 text-2xl mr-3">🥩</span>
-                        <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100">Proteínas</h3>
-                    </div>
-                    <ul class="space-y-1 text-gray-600 dark:text-gray-300">
-                        <li class="flex items-start">
-                            <span class="text-red-500 mr-2">•</span> <span>{{ grouped_menus.Proteinas.0 }}</span>
-                        </li>
-                      {% if grouped_menus.Proteinas.1 %} 
-                        <li class="flex items-start">
-                            <span class="text-red-500 mr-2">•</span> <span>{{ grouped_menus.Proteinas.1 }}</span>
-                        </li>
-                       {% endif %}
-                      {% if grouped_menus.Proteinas.2 %} 
-                        <li class="flex items-start">
-                            <span class="text-red-500 mr-2">•</span> <span>{{ grouped_menus.Proteinas.2 }}</span>
-                        </li>
-                       {% endif %}
-                    </ul>
+                <div class="group bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 border-t-4 border-red-500 relative overflow-hidden">
+    
+                <div class="absolute top-4 right-4 mb-3">
+                    <button class="flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-blue-500 hover:text-blue-700 dark:hover:text-blue-400 transition-colors">
+                        <span class="text-lg" data-bs-toggle="modal" data-bs-target="#menus">🖋️</span>
+                    </button>
                 </div>
+
+               <div class="flex items-center mb-4 justify-start pt-4">
+                    <div class="p-1 bg-blue-50 dark:bg-blue-900/30 rounded-lg ">
+                        <span class="text-2xl text-red-500">🥩</span>
+                    </div>
+                    <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100 tracking-tight">Proteinas</h3>
+                </div>
+
+                <ul class="space-y-2">
+                    {% for item in grouped_menus.Proteinas|slice:":3" %}
+                    <li class="flex items-start text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+                        <span class="text-yellow-500 mr-2 font-bold">•</span>
+                        <span class="text-sm leading-tight">{{ item }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+               
+            </div>
                 {% endif %}
-                
                 {% if grouped_menus.Postres %}
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-pink-500">
-                    <div class="flex items-center mb-3">
-                        <span class="text-pink-500 text-2xl mr-3">🍰</span>
-                        <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100">Postres</h3>
-                    </div>
-                    <ul class="space-y-1 text-gray-600 dark:text-gray-300">
-                        <li class="flex items-start">
-                            <span class="text-pink-500 mr-2">•</span> <span>{{ grouped_menus.Postres.0 }}</span>
-                        </li>
-                       {% if grouped_menus.Postres.1 %} 
-                        <li class="flex items-start">
-                            <span class="text-pink-500 mr-2">•</span> <span>{{ grouped_menus.Postres.1 }}</span>
-                        </li>
-                        {% endif %}
-                       {% if grouped_menus.Postres.2 %} 
-                        <li class="flex items-start">
-                            <span class="text-pink-500 mr-2">•</span> <span>{{ grouped_menus.Postres.2 }}</span>
-                        </li>
-                        {% endif %}
-                    </ul>
+                <div class="group bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 border-t-4 border-pink-500 relative overflow-hidden">
+    
+                <div class="absolute top-4 right-4 mb-3">
+                    <button class="flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-blue-500 hover:text-blue-700 dark:hover:text-blue-400 transition-colors">
+                        <span class="text-lg" data-bs-toggle="modal" data-bs-target="#menus">🖋️</span>
+                    </button>
                 </div>
+
+               <div class="flex items-center mb-4 justify-start pt-4">
+                    <div class="p-1 bg-blue-50 dark:bg-blue-900/30 rounded-lg ">
+                        <span class="text-2xl text-pink-500">🍰</span>
+                    </div>
+                    <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100 tracking-tight">Postres</h3>
+                </div>
+
+                <ul class="space-y-2">
+                    {% for item in grouped_menus.Postres|slice:":3" %}
+                    <li class="flex items-start text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+                        <span class="text-pink-500 mr-2 font-bold">•</span>
+                        <span class="text-sm leading-tight">{{ item }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+               
+            </div>
                 {% endif %}
-                
                 {% if grouped_menus.Bebidas %}
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-cyan-500">
-                    <div class="flex items-center mb-3">
-                        <span class="text-cyan-500 text-2xl mr-3">🍹</span>
-                        <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100">Bebidas</h3>
-                    </div>
-                    <ul class="space-y-1 text-gray-600 dark:text-gray-300">
-                        <li class="flex items-start">
-                            <span class="text-cyan-500 mr-2">•</span> <span>{{ grouped_menus.Bebidas.0 }}</span>
-                        </li>
-                      {% if grouped_menus.Bebidas.1 %}  
-                        <li class="flex items-start">
-                            <span class="text-cyan-500 mr-2">•</span> <span>{{ grouped_menus.Bebidas.1 }}</span>
-                        </li>
-                      {% endif %}
-                      {% if grouped_menus.Bebidas.2 %}  
-                        <li class="flex items-start">
-                            <span class="text-cyan-500 mr-2">•</span> <span>{{ grouped_menus.Bebidas.2 }}</span>
-                        </li>
-                      {% endif %}
-                    </ul>
+                <div class="group bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 border-t-4 border-cyan-500 relative overflow-hidden">
+    
+                <div class="absolute top-4 right-4 mb-3">
+                    <button class="flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-blue-500 hover:text-blue-700 dark:hover:text-blue-400 transition-colors">
+                        <span class="text-lg" data-bs-toggle="modal" data-bs-target="#menus">🖋️</span>
+                    </button>
                 </div>
-                {% endif %}
 
+               <div class="flex items-center mb-4 justify-start pt-4">
+                    <div class="p-1 bg-blue-50 dark:bg-blue-900/30 rounded-lg ">
+                        <span class="text-2xl text-cyan-500">🍹</span>
+                    </div>
+                    <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100 tracking-tight">Bebidas</h3>
+                </div>
+
+                <ul class="space-y-2">
+                    {% for item in grouped_menus.Bebidas|slice:":3" %}
+                    <li class="flex items-start text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+                        <span class="text-cyan-500 mr-2 font-bold">•</span>
+                        <span class="text-sm leading-tight">{{ item }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+               
+            </div>
+                {% endif %}
                 {% if grouped_menus.Ensaladas %}
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-green-500">
-                    <div class="flex items-center mb-3">
-                        <span class="text-green-500 text-2xl mr-3">🥗</span>
-                        <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100">Ensaladas</h3>
-                    </div>
-                    <ul class="space-y-1 text-gray-600 dark:text-gray-300">
-                        <li class="flex items-start">
-                            <span class="text-green-500 mr-2">•</span> <span>{{ grouped_menus.Ensaladas.0 }}</span>
-                        </li>
-                      {% if grouped_menus.Ensaladas.1 %}  
-                        <li class="flex items-start">
-                            <span class="text-cyan-500 mr-2">•</span> <span>{{ grouped_menus.Ensaladas.1 }}</span>
-                        </li>
-                      {% endif %}
-                      {% if grouped_menus.Ensaladas.2 %}  
-                        <li class="flex items-start">
-                            <span class="text-cyan-500 mr-2">•</span> <span>{{ grouped_menus.Ensaladas.2 }}</span>
-                        </li>
-                      {% endif %}
-                    </ul>
+                <div class="group bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 border-t-4 border-green-500 relative overflow-hidden">
+    
+                <div class="absolute top-4 right-4 mb-3">
+                    <button class="flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-blue-500 hover:text-blue-700 dark:hover:text-blue-400 transition-colors">
+                         {% for item in raw_menus %}
+                                <span class="text-lg" data-bs-toggle="modal" data-bs-target="#menus{{ item.id_menu }}">🖋️</span>
+
+                         {% endfor %}
+                    </button>
                 </div>
+
+               <div class="flex items-center mb-4 justify-start pt-4">
+                    <div class="p-1 bg-blue-50 dark:bg-blue-900/30 rounded-lg ">
+                        <span class="text-2xl text-green-500">🥗</span>
+                    </div>
+                    <h3 class="font-bold text-xl text-gray-900 dark:text-gray-100 tracking-tight">Ensaladas</h3>
+                </div>
+
+                <ul class="space-y-2">
+                    {% for item in grouped_menus.Ensaladas|slice:":3" %}
+                    <li class="flex items-start text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+                        <span class="text-green-500 mr-2 font-bold">•</span>
+                        <span class="text-sm leading-tight">{{ item }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+               
+            </div>
                 {% endif %}
 
+                
+
+               
             </div>
         </div>
     </div>
 </div>
+ {% for item in raw_menus %}
+    {% include 'modal/update.html' %}
+ {% endfor %}
  <script src="{% static 'js/form_modal_menu.js' %}"></script>
 {% endblock %}

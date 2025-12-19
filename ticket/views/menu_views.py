@@ -1,3 +1,4 @@
+from .misc_views import get_api_headers
 from django.shortcuts import render, redirect
 from django.contrib import messages
 import requests
@@ -6,12 +7,25 @@ from datetime import datetime, date
 from collections import defaultdict
 api_url = settings.API
 
+def dolar_bcv(request):
+    headers = get_api_headers(request)
+    try:
+        response_bcv = requests.get(f"{api_url}/dolar-bcv", headers=headers, timeout=10)
+        response_bcv.raise_for_status()
+        json_bcv = response_bcv.json()
+        bcv_data = json_bcv.get('data', {})
+        bcv_rate = bcv_data.get('rate', 'N/A')
+        return bcv_rate
+    except Exception as e:
+        messages.error(request,"error al cargar el dorlar")         
+
+    
 def menu(request):
     
     if 'api_token' not in request.session:
         messages.warning(request, "Debe iniciar sesión para ver esta información.")
         return redirect('inicio')
-
+    
     # Diccionario para almacenar los menús agrupados por categoría
     grouped_menus = defaultdict(list) 
     date_of_menu = None 
@@ -22,8 +36,9 @@ def menu(request):
     }
     
     fecha_actual = date.today()
+    dolar = dolar_bcv(request)
     
-    
+    print(dolar)
     # Convertimos la fecha a formato ISO (YYYY-MM-DD) para la API
     fecha_para_api = fecha_actual.isoformat() 
     
@@ -70,11 +85,15 @@ def menu(request):
             'fecha_actual':fecha_actual,
             'date_of_menu':date_of_menu,
             'grouped_menus': grouped_menus, 
+            'raw_menus':raw_menus,
+            'dolar':dolar,
             'current_page' : 'menu'
         }
     print(grouped_menus)
     
     return render(request, 'paginas/menu.html', contexto)
+
+
 def registro_menu(request):
     if request.method == 'POST':
         
