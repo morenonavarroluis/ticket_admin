@@ -1,0 +1,45 @@
+/* Estilos adicionales para el escáner */
+#reader {
+    transition: all 0.3s ease;
+}
+
+#reader video {
+    border-radius: 0.75rem !important;
+}
+
+#reader__dashboard_section {
+    padding: 0 !important;
+}
+
+#reader__dashboard_section_csr button {
+    background: linear-gradient(to right, #3b82f6, #8b5cf6) !important;
+    color: white !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 0.5rem !important;
+    font-weight: 500 !important;
+    border: none !important;
+    transition: all 0.2s !important;
+}
+
+#reader__dashboard_section_csr button:hover {
+    opacity: 0.9 !important;
+    transform: translateY(-1px) !important;
+}
+
+#reader__scan_region {
+    background: #f3f4f6 !important;
+    border-radius: 0.75rem !important;
+    min-height: 300px !important;
+}
+
+.dark #reader__scan_region {
+    background: #1f2937 !important;
+}
+
+#reader__status_span {
+    background: #10b981 !important;
+    color: white !important;
+    padding: 0.25rem 0.75rem !important;
+    border-radius: 9999px !important;
+    font-size: 0.875rem !important;
+}

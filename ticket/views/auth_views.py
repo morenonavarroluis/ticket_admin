@@ -36,9 +36,9 @@ def inicio(request):
                     request.session['first_name'] = name
                     request.session['email'] = email
                     
-                    messages.success(request, 'Cargar ')
+                    messages.success(request, 'llenar extras')
                     
-                    return redirect('index')
+                    return redirect('extras_unified_view')
                 else:
                     messages.error(request, 'Token no encontrado en la respuesta de la API.')
             else:

@@ -1,154 +1,204 @@
- {% load static %}
- <aside id="sidebar"
-            class="sidebar bg-white dark:bg-gray-800 **w-64** fixed top-0 left-0 h-full shadow-lg transition-transform transform -translate-x-full md:translate-x-0 **z-40**">
-            <div class="flex flex-col h-full">
-                <ul class="space-y-2 px-4">
-                    
-                   
-                    <li class="px-4 py-4">
-                        <div class="flex items-center justify-between">
-                            <div class="flex-grow">
-                                <img class="h-auto w-4/5" src="{% static 'img/ticket.png' %}" alt="Logo de TicketLunch">
-                            </div>
-
-                            <div class="md:hidden">
-                                <button id="mobile-sidebar-close" 
-                                        class="p-2 text-gray-500 hover:text-red-500 dark:text-gray-300 dark:hover:text-red-400 transition-colors"
-                                        onclick="toggleSidebar()">
-                                    <i class="fa-solid fa-xmark text-xl"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </li>
-                    <br>
-                    <li>
-                        <a href="{% url 'index' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-                                {% if current_page == 'dashboard' %}bg-blue-300 text-yellow-300 active{% endif %}">
-                            <i class="fas fa-tachometer-alt text-center text-gray-800 dark:text-white"></i>
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Dashboard</span>
-                        </a>
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'usu' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-
-                                {% if current_page == 'usuarios' %}bg-blue-300 text-white active{% endif %}">
-
-
-
-                            <i class="fa fa-user text-gray-800 dark:text-white" aria-hidden="true"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Usuarios</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'menu' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-
-                                {% if current_page == 'menu' %}bg-blue-300 text-white active{% endif %}">
-
-                            <i class="fa-solid fa-bars text-gray-800 dark:text-white"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Menu</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'seleccion' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-
-                                {% if current_page == 'seleccion' %}bg-blue-300 text-white active{% endif %}">
-
-                            <i class="fa-solid fa-check-double text-gray-800 dark:text-white"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Seleccion</span>
-
-                        </a>
-
-                    </li>
-
-                    
-
-                   
-                    <li>
-
-                        <a href="{% url 'empleados' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-
-                                {% if current_page == 'empleados' %}bg-blue-300 text-white active{% endif %}">
-
-                            <i class="fas fa-users w-6 text-center text-gray-800 dark:text-white"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Empleados</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'pedidos' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-
-                                {% if current_page == 'pedidos' %}bg-blue-300 text-white active{% endif %}">
-
-
-
-                            <i class="fa-solid fa-sort dark:text-white"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Pedidos</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'escaner' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-
-                                {% if current_page == 'escaner' %}bg-blue-300 text-white active{% endif %}">
-
-                            <i class="fa fa-qrcode text-gray-800 dark:text-white" aria-hidden="true"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Escaner</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'extras_unified_view' %}" class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors
-
-                                {% if current_page == 'extras' %}bg-blue-300 text-white active{% endif %}">
-
-                            <i class="fa fa-cutlery text-gray-800 dark:text-white" aria-hidden="true"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">Gestion del comedor</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="{% url 'logout_view' %}"
-                            class="menu-item flex items-center p-3 rounded-lg text-gray-300 hover:bg-blue-200 transition-colors">
-
-                            <i class="fas fa-sign-out-alt w-6 text-center text-gray-800 dark:text-white"></i>
-
-                            <span class="menu-text ml-3 text-gray-800 dark:text-white">salir</span>
-
-                        </a>
-
-                    </li>
-
-
-
-                </ul>
+{% load static %}
+<aside id="sidebar"
+       class="sidebar fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-900 shadow-xl transition-all duration-300 transform -translate-x-full md:translate-x-0 z-40 border-r border-gray-200 dark:border-gray-700">
+    
+    <div class="flex flex-col h-full">
+        <!-- Header con logo y botón cerrar -->
+        <div class="px-4 py-6 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+                <div class="flex-grow">
+                    <img class="h-auto w-4/5 hover:opacity-90 transition-opacity" 
+                         src="{% static 'img/ticket.png' %}" 
+                         alt="Logo de TicketLunch">
+                </div>
+
+                <!-- Botón cerrar solo móvil -->
+                <div class="md:hidden">
+                    <button id="mobile-sidebar-close" 
+                            class="p-2.5 rounded-lg text-gray-500 hover:text-red-600 hover:bg-red-50 dark:text-gray-400 dark:hover:text-red-400 dark:hover:bg-red-900/20 transition-all"
+                            onclick="toggleSidebar()"
+                            aria-label="Cerrar menú">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
             </div>
-        </aside>
+        </div>
+
+        <!-- Navegación principal -->
+        <nav class="flex-1 overflow-y-auto py-4 px-3 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600">
+            <ul class="space-y-1.5">
+                <!-- Dashboard -->
+                <li>
+                    <a href="{% url 'index' %}" 
+                       class="menu-item flex items-center px-4 py-3 rounded-xl text-gray-700 hover:bg-blue-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-all duration-200 group
+                              {% if current_page == 'dashboard' %}bg-gradient-to-r from-blue-500 to-blue-600 dark:text-white shadow-md hover:from-blue-600 hover:to-blue-700 dark:from-blue-600 dark:to-blue-700{% endif %}">
+                        <i class="fas fa-tachometer-alt w-6 text-center {% if current_page == 'dashboard' %}text-white{% else %}text-gray-500 group-hover:text-blue-500 dark:text-gray-400 dark:group-hover:text-blue-400{% endif %}"></i>
+                        <span class="ml-3 font-medium">Dashboard</span>
+                    </a>
+                </li>
+
+                <!-- Usuarios -->
+                <li>
+                    <a href="{% url 'usu' %}" 
+                       class="menu-item flex items-center px-4 py-3 rounded-xl text-gray-700 hover:bg-blue-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-all duration-200 group
+                              {% if current_page == 'usuarios' %}bg-gradient-to-r from-blue-500 to-blue-600 dark:text-white shadow-md hover:from-blue-600 hover:to-blue-700 dark:from-blue-600 dark:to-blue-700{% endif %}">
+                        <i class="fa fa-user w-6 text-center {% if current_page == 'usuarios' %}text-white{% else %}text-gray-500 group-hover:text-blue-500 dark:text-gray-400 dark:group-hover:text-blue-400{% endif %}"></i>
+                        <span class="ml-3 font-medium">Usuarios</span>
+                    </a>
+                </li>
+
+                <!-- Menú -->
+                <li>
+                    <a href="{% url 'menu' %}" 
+                       class="menu-item flex items-center px-4 py-3 rounded-xl text-gray-700 hover:bg-blue-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-all duration-200 group
+                              {% if current_page == 'menu' %}bg-gradient-to-r from-blue-500 to-blue-600 dark:text-white shadow-md hover:from-blue-600 hover:to-blue-700 dark:from-blue-600 dark:to-blue-700{% endif %}">
+                        <i class="fa-solid fa-bars w-6 text-center {% if current_page == 'menu' %}text-white{% else %}text-gray-500 group-hover:text-blue-500 dark:text-gray-400 dark:group-hover:text-blue-400{% endif %}"></i>
+                        <span class="ml-3 font-medium">Menú</span>
+                    </a>
+                </li>
+
+                <!-- Selección -->
+                <li>
+                    <a href="{% url 'seleccion' %}" 
+                       class="menu-item flex items-center px-4 py-3 rounded-xl text-gray-700 hover:bg-blue-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-all duration-200 group
+                              {% if current_page == 'seleccion' %}bg-gradient-to-r from-blue-500 to-blue-600 dark:text-white shadow-md hover:from-blue-600 hover:to-blue-700 dark:from-blue-600 dark:to-blue-700{% endif %}">
+                        <i class="fa-solid fa-check-double w-6 text-center {% if current_page == 'seleccion' %}text-white{% else %}text-gray-500 group-hover:text-blue-500 dark:text-gray-400 dark:group-hover:text-blue-400{% endif %}"></i>
+                        <span class="ml-3 font-medium">Selección</span>
+                    </a>
+                </li>
+
+                <!-- Empleados -->
+                <li>
+                    <a href="{% url 'empleados' %}" 
+                       class="menu-item flex items-center px-4 py-3 rounded-xl text-gray-700 hover:bg-blue-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-all duration-200 group
+                              {% if current_page == 'empleados' %}bg-gradient-to-r from-blue-500 to-blue-600 dark:text-white shadow-md hover:from-blue-600 hover:to-blue-700 dark:from-blue-600 dark:to-blue-700{% endif %}">
+                        <i class="fas fa-users w-6 text-center {% if current_page == 'empleados' %}text-white{% else %}text-gray-500 group-hover:text-blue-500 dark:text-gray-400 dark:group-hover:text-blue-400{% endif %}"></i>
+                        <span class="ml-3 font-medium">Empleados</span>
+                    </a>
+                </li>
+
+                <!-- Pedidos -->
+                <li>
+                    <a href="{% url 'pedidos' %}" 
+                       class="menu-item flex items-center px-4 py-3 rounded-xl text-gray-700 hover:bg-blue-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-all duration-200 group
+                              {% if current_page == 'pedidos' %}bg-gradient-to-r from-blue-500 to-blue-600 dark:text-white shadow-md hover:from-blue-600 hover:to-blue-700 dark:from-blue-600 dark:to-blue-700{% endif %}">
+                        <i class="fa-solid fa-sort w-6 text-center {% if current_page == 'pedidos' %}text-white{% else %}text-gray-500 group-hover:text-blue-500 dark:text-gray-400 dark:group-hover:text-blue-400{% endif %}"></i>
+                        <span class="ml-3 font-medium">Pedidos</span>
+                    </a>
+                </li>
+
+                <!-- Escáner -->
+                <li>
+                    <a href="{% url 'escaner' %}" 
+                       class="menu-item flex items-center px-4 py-3 rounded-xl text-gray-700 hover:bg-blue-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-all duration-200 group
+                              {% if current_page == 'escaner' %}bg-gradient-to-r from-blue-500 to-blue-600 dark:text-white shadow-md hover:from-blue-600 hover:to-blue-700 dark:from-blue-600 dark:to-blue-700{% endif %}">
+                        <i class="fa fa-qrcode w-6 text-center {% if current_page == 'escaner' %}text-white{% else %}text-gray-500 group-hover:text-blue-500 dark:text-gray-400 dark:group-hover:text-blue-400{% endif %}"></i>
+                        <span class="ml-3 font-medium">Escáner</span>
+                    </a>
+                </li>
+
+                <!-- Gestión del comedor -->
+                <li>
+                    <a href="{% url 'extras_unified_view' %}" 
+                       class="menu-item flex items-center px-4 py-3 rounded-xl text-gray-700 hover:bg-blue-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-all duration-200 group
+                              {% if current_page == 'extras' %}bg-gradient-to-r from-blue-500 to-blue-600 dark:text-white shadow-md hover:from-blue-600 hover:to-blue-700 dark:from-blue-600 dark:to-blue-700{% endif %}">
+                        <i class="fa fa-cutlery w-6 text-center {% if current_page == 'extras' %}text-white{% else %}text-gray-500 group-hover:text-blue-500 dark:text-gray-400 dark:group-hover:text-blue-400{% endif %}"></i>
+                        <span class="ml-3 font-medium">Gestión del comedor</span>
+                    </a>
+                </li>
+
+                <!-- Separador antes del logout -->
+                <li class="pt-4 mt-2 border-t border-gray-200 dark:border-gray-700">
+                    <a href="{% url 'logout_view' %}" 
+                       class="menu-item flex items-center px-4 py-3 rounded-xl text-gray-700 hover:bg-red-50 dark:text-gray-300 dark:hover:bg-red-900/20 transition-all duration-200 group">
+                        <i class="fas fa-sign-out-alt w-6 text-center text-gray-500 group-hover:text-red-500 dark:text-gray-400 dark:group-hover:text-red-400"></i>
+                        <span class="ml-3 font-medium group-hover:text-red-600 dark:group-hover:text-red-400">Salir</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Footer opcional con información de versión -->
+        <div class="px-4 py-3 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400">
+            <p class="text-center">© 2024 TicketLunch</p>
+        </div>
+    </div>
+</aside>
+
+<!-- Overlay para móvil cuando el sidebar está abierto -->
+<div id="sidebar-overlay" 
+     class="fixed inset-0 bg-black/50 backdrop-blur-sm z-30 hidden md:hidden transition-opacity"
+     onclick="toggleSidebar()">
+</div>
+
+<style>
+    /* Scrollbar personalizada para el sidebar */
+    .scrollbar-thin::-webkit-scrollbar {
+        width: 4px;
+    }
+    
+    .scrollbar-thin::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 20px;
+    }
+    
+    .dark .scrollbar-thin::-webkit-scrollbar-thumb {
+        background: #4b5563;
+    }
+    
+    .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
+    
+    .dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        background: #6b7280;
+    }
+
+    /* Animaciones */
+    .sidebar {
+        transition-property: transform, box-shadow;
+    }
+    
+    .menu-item {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .menu-item::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+        transform: translateX(-100%);
+        transition: transform 0.6s;
+    }
+    
+    .menu-item:hover::after {
+        transform: translateX(100%);
+    }
+</style>
+
+<script>
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    
+    sidebar.classList.toggle('-translate-x-full');
+    
+    if (overlay) {
+        if (sidebar.classList.contains('-translate-x-full')) {
+            overlay.classList.add('hidden');
+            overlay.classList.remove('opacity-100');
+        } else {
+            overlay.classList.remove('hidden');
+            // Forzar un reflow para la animación
+            overlay.offsetHeight;
+            overlay.classList.add('opacity-100');
+        }
+    }
+}
+</script>

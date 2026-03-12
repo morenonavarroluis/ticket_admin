@@ -1,30 +1,30 @@
 document.addEventListener('DOMContentLoaded', function() {
     
-
     const totalSoldTag = document.getElementById('total-sold'); 
     const dailySalesLimitTag = document.getElementById('daily-sales-limit'); 
     const totalAllowedTag = document.getElementById('remaining-limit'); 
+    
     if (!totalSoldTag || !dailySalesLimitTag || !totalAllowedTag) {
         console.error("Faltan etiquetas de datos para el gráfico de objetivo de ventas.");
         return; 
     }
 
     // Convertir a número (flotante)
-    const totalSold = parseFloat(totalSoldTag.textContent || '0');        
-    const remainingToSell = parseFloat(dailySalesLimitTag.textContent || '0'); 
-    const totalDailyLimit = parseFloat(totalAllowedTag.textContent || '0');  
+    const totalSold = parseFloat(totalSoldTag.textContent || '0');           // Lo vendido
+    const dailySalesLimit = parseFloat(dailySalesLimitTag.textContent || '0'); // Límite total del día
+    const remainingToSell = parseFloat(totalAllowedTag.textContent || '0');   // Lo que falta por vender
 
-    
-    let totalVendido = 0;
-    if (totalDailyLimit > 0) {
-        totalVendido =  totalDailyLimit - totalSold ;
+    // Calcular el porcentaje completado
+    let percentageCompleted = 0;
+    if (dailySalesLimit > 0) {
+        percentageCompleted = (totalSold / dailySalesLimit) * 100;
     }
 
     // Los datos para el gráfico de dona son: [Parte Completada, Parte Restante]
     const dataForDoughnutChart = {
         labels: ['Completado', 'Restante'],
         datasets: [{
-            data: [totalSold, remainingToSell], // Usamos 4 y 996
+            data: [totalSold, remainingToSell],
             backgroundColor: [
                 '#5a5c9f', // Color para "Completado" (morado/azul)
                 '#343a40'  // Color para "Restante" (gris oscuro)
@@ -42,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }]
     };
 
-   
     const ctxDoughnut = document.getElementById('dailySalesGoalChart').getContext('2d');
 
     const dailySalesGoalChart = new Chart(ctxDoughnut, {
@@ -63,23 +62,33 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 },
                 tooltip: {
-
-                    enabled: true 
-                    
+                    enabled: true,
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed !== null) {
+                                label += context.parsed.toFixed(0) + ' ventas';
+                            }
+                            return label;
+                        }
+                    }
                 }
             }
         }
     });
 
-    
+    // Actualizar el porcentaje en el centro
     const percentageValueElement = document.getElementById('percentageValue');
     if (percentageValueElement) {
-        percentageValueElement.textContent = `${totalVendido.toFixed(0)}`; 
+        percentageValueElement.textContent = `${percentageCompleted.toFixed(0)}%`; 
     }
 
- 
+    // Si quieres mostrar el título con el límite diario
     // const chartTitleElement = document.getElementById('chart-title'); 
     // if (chartTitleElement) {
-    //     chartTitleElement.textContent = `Limite de venta del dia ${totalDailyLimit.toFixed(0)}`;
+    //     chartTitleElement.textContent = `Límite de venta del día: ${dailySalesLimit.toFixed(0)}`;
     // }
 });

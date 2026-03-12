@@ -1,4 +1,133 @@
 <div class="modal fade" id="extras" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content dark:bg-gray-800 rounded-xl shadow-2xl border-0 overflow-hidden">
+            
+            <!-- Header con gradiente -->
+            <div class="relative bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-700 dark:to-blue-900 p-6">
+                <button type="button" class="absolute top-4 right-4 text-white/80 hover:text-white transition-colors" data-bs-dismiss="modal" aria-label="Close">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                
+                <div class="flex items-center justify-center space-x-3">
+                    <div class="bg-white/20 p-3 rounded-full">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </div>
+                    <h5 class="text-2xl font-bold text-white" id="staticBackdropLabel">Registrar Extra</h5>
+                </div>
+            </div>
+
+            <!-- Cuerpo del modal -->
+            <div class="p-6 bg-gray-50 dark:bg-gray-800">
+                <form action="extras_unified_view" method="post" class="space-y-6">
+                    {% csrf_token %}
+                    
+                    <!-- Campo Extra con icono -->
+                    <div class="space-y-2">
+                        <label for="extra_nombre" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                            <span class="flex items-center gap-2">
+                                
+                                Nombre del Extra
+                            </span>
+                        </label>
+                        <div class="relative">
+                            <input type="text" 
+                                   id="extra_nombre" 
+                                   name="extras" 
+                                   class="w-full p-3 border-2 border-gray-200 dark:border-gray-700 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 dark:bg-gray-700 dark:text-white transition-all duration-200 outline-none" 
+                                   placeholder="Ej: Porción de queso"
+                                   required>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Ingresa el nombre del extra que deseas agregar</p>
+                    </div>
+
+                    <!-- Campo Precio con icono -->
+                    <div class="space-y-2">
+                        <label for="extra_precio" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                           
+                        </label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-3 text-gray-500 dark:text-gray-400">$</span>
+                            <input type="number" 
+                                   id="extra_precio" 
+                                   name="precio" 
+                                   class="w-full p-3 pl-8 border-2 border-gray-200 dark:border-gray-700 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 dark:focus:ring-green-800 dark:bg-gray-700 dark:text-white transition-all duration-200 outline-none" 
+                                   placeholder="0.00"
+                                   step="0.01"
+                                   min="0"
+                                   required>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Ingresa el precio del extra (ej: 2.50)</p>
+                    </div>
+
+                    <!-- Barra divisoria decorativa -->
+                    <div class="relative py-2">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+                        </div>
+                        <div class="relative flex justify-center">
+                            <span class="bg-gray-50 dark:bg-gray-800 px-3 text-xs text-gray-500 dark:text-gray-400">Detalles del extra</span>
+                        </div>
+                    </div>
+
+                    <!-- Vista previa (opcional) -->
+                    <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                        <p class="text-sm text-blue-800 dark:text-blue-200 font-medium mb-2">📝 Vista previa:</p>
+                        <div class="flex items-center justify-between text-sm" id="preview">
+                            <span class="text-gray-600 dark:text-gray-400" id="preview-nombre">Nombre del extra</span>
+                            <span class="bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full font-semibold" id="preview-precio">$0.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Footer con botones -->
+                    <div class="flex gap-3 pt-4">
+                        <button type="button" 
+                                class="flex-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold rounded-lg py-3 px-6 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-400" 
+                                data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="submit" 
+                                class="flex-1 bg-gradient-to-r from-green-500 to-green-600 dark:text-white font-semibold rounded-lg py-3 px-6 hover:from-green-600 hover:to-green-700 transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-lg hover:shadow-xl">
+                            <span class="flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Registrar Extra
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script para la vista previa en tiempo real -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const nombreInput = document.getElementById('extra_nombre');
+    const precioInput = document.getElementById('extra_precio');
+    const previewNombre = document.getElementById('preview-nombre');
+    const previewPrecio = document.getElementById('preview-precio');
+
+    if (nombreInput && precioInput) {
+        nombreInput.addEventListener('input', function() {
+            previewNombre.textContent = this.value || 'Nombre del extra';
+        });
+
+        precioInput.addEventListener('input', function() {
+            const value = this.value ? parseFloat(this.value).toFixed(2) : '0.00';
+            previewPrecio.textContent = `$${value}`;
+        });
+    }
+});
+</script>
+
+
+{% comment %} <div class="modal fade" id="extras" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content dark:bg-gray-800 p-6">
             <div class="modal-header border-b-0 pb-0">
@@ -26,4 +155,4 @@
                 </form>
         </div>
     </div>
-</div>
+</div> {% endcomment %}

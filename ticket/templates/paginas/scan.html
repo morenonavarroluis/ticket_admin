@@ -2,9 +2,184 @@
 {% load static %}
 {% block content %}
 
+<div class="container mx-auto px-4 py-8">
+    <!-- Header con diseño mejorado -->
+    <div class="mb-8 text-center">
+        <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Escáner QR Profesional
+        </h1>
+        <p class="text-gray-600 dark:text-gray-400 mt-2 text-lg">
+            Coloca el código QR frente a la cámara para escanear
+        </p>
+    </div>
+
+    <!-- Contenedor del escáner con diseño mejorado -->
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 border border-gray-200 dark:border-gray-700">
+            <!-- Indicador de estado -->
+            <div class="flex items-center justify-between mb-4 px-4">
+                <div class="flex items-center space-x-2">
+                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                    <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Cámara activa</span>
+                </div>
+                <button id="toggleCameraBtn" class="text-sm px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center space-x-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span>Cambiar cámara</span>
+                </button>
+            </div>
+
+            <!-- Área del escáner -->
+            <div id="reader" class="w-full rounded-xl overflow-hidden border-4 border-blue-500/30 dark:border-blue-400/20"></div>
+
+            <!-- Loading State (opcional) -->
+            <div id="loadingState" class="hidden mt-6 text-center py-8">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
+                <p class="mt-2 text-gray-600 dark:text-gray-400">Procesando...</p>
+            </div>
+
+            <!-- Área de resultados (ahora se usa solo para mostrar el texto del QR si es necesario) -->
+            <div id="resultContainer" class="mt-6 hidden">
+                <!-- Este contenedor puede ser usado para mostrar resultados simples -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Instrucciones adicionales -->
+    <div class="max-w-2xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-center border border-gray-200 dark:border-gray-700">
+            <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+            </div>
+            <h4 class="font-medium text-gray-900 dark:text-white mb-1">Enfoque</h4>
+            <p class="text-xs text-gray-500 dark:text-gray-400">Centra el código en el visor</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-center border border-gray-200 dark:border-gray-700">
+            <div class="w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"></path>
+                </svg>
+            </div>
+            <h4 class="font-medium text-gray-900 dark:text-white mb-1">Iluminación</h4>
+            <p class="text-xs text-gray-500 dark:text-gray-400">Buena luz para mejor lectura</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-center border border-gray-200 dark:border-gray-700">
+            <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+            </div>
+            <h4 class="font-medium text-gray-900 dark:text-white mb-1">Rápido</h4>
+            <p class="text-xs text-gray-500 dark:text-gray-400">Escaneo instantáneo</p>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{% static 'js/qr.js' %}"></script>
+
+<!-- Script mínimo para funcionalidades de UI -->
+<script>
+(function() {
+    // Elementos del DOM
+    const toggleCameraBtn = document.getElementById('toggleCameraBtn');
+    const resultContainer = document.getElementById('resultContainer');
+
+    // Función para cambiar cámara (será implementada por qr.js)
+    window.switchCamera = function() {
+        // Esta función será sobrescrita por qr.js
+        console.log('Esperando inicialización del escáner...');
+    };
+
+    // Event listener para el botón de cambiar cámara
+    if (toggleCameraBtn) {
+        toggleCameraBtn.addEventListener('click', function() {
+            if (typeof window.switchCamera === 'function') {
+                window.switchCamera();
+            } else {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Cargando...',
+                    text: 'El escáner se está inicializando. Por favor espera.',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            }
+        });
+    }
+
+    // Mostrar estado de carga cuando sea necesario
+    window.showLoading = function(show) {
+        const loadingEl = document.getElementById('loadingState');
+        if (loadingEl) {
+            if (show) {
+                loadingEl.classList.remove('hidden');
+            } else {
+                loadingEl.classList.add('hidden');
+            }
+        }
+    };
+
+    // Función para mostrar resultados simples (si es necesario)
+    window.showSimpleResult = function(content) {
+        if (resultContainer) {
+            resultContainer.innerHTML = `
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+                    <p class="text-gray-700 dark:text-gray-300 font-mono text-sm break-all">${content}</p>
+                </div>
+            `;
+            resultContainer.classList.remove('hidden');
+        }
+    };
+
+    // Limpiar resultados
+    window.clearResult = function() {
+        if (resultContainer) {
+            resultContainer.innerHTML = '';
+            resultContainer.classList.add('hidden');
+        }
+    };
+
+})();
+</script>
+
+<!-- Estilos adicionales para SweetAlert2 en modo oscuro -->
+<style>
+.dark .swal2-popup {
+    background: #1f2937 !important;
+    color: #fff !important;
+}
+.dark .swal2-title {
+    color: #fff !important;
+}
+.dark .swal2-html-container {
+    color: #d1d5db !important;
+}
+.dark .swal2-confirm {
+    background: linear-gradient(to right, #3b82f6, #8b5cf6) !important;
+}
+.swal2-popup {
+    font-family: inherit !important;
+    border-radius: 1rem !important;
+}
+</style>
+
+{% endblock %}
+
+{% comment %} {% extends 'bases/base_dashboard.html' %}
+{% load static %}
+{% block content %}
+
 <h1 class="dark:text-white text-2xl text-center pt-2">Escanear Código QR</h1>
     <div id="reader" class=" m-auto pt-10"></div>
     <div id="result"></div>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <script src="{% static 'js/qr.js' %}"></script>
-{% endblock %}
+{% endblock %}  {% endcomment %}

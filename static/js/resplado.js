@@ -1,3 +1,5 @@
+// const API_BASE_URL = 'https://comedor.mercal.gob.ve/api/p1/pedidos/takeOrder'; 
+// const API_CONSUMO_URL = 'https://comedor.mercal.gob.ve/api/p1/pedidos/consumo'; 
 const API_BASE_URL = 'http://127.0.0.1:8000/api/p1/pedidos/takeOrder'; 
 const API_CONSUMO_URL = 'http://127.0.0.1:8000/api/p1/pedidos/consumo'; 
 

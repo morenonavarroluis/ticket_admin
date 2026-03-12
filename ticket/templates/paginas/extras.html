@@ -2,52 +2,124 @@
 {% load static %}
 {% block content %}
 
-<div class="flex flex-col items-center p-4">
-    <h1 class="text-xl font-bold mb-4 dark:text-white">GESTIÓN DEL COMEDOR</h1>
-
-    <div class="w-full max-w-2xl flex flex-col md:flex-row items-start justify-center m-2 gap-4">
-        
-        <div class="border border-gray-400 p-4 w-full md:w-1/2 shadow-lg rounded-lg">
-            <div class="flex justify-between items-center mb-2">
-                <h2 class="text-lg dark:text-white font-semibold">EXTRAS</h2>
-                <button class="text-lg font-bold w-6 h-6 border border-black rounded-full flex items-center justify-center dark:text-white" data-bs-toggle="modal" data-bs-target="#extras">+</button>
-            </div>
-            {% for item in resultados %}
-            <div class="text-base space-y-2">
-                <div class="flex justify-between">
-                    <span class="font-medium dark:text-white">{{ item.name_extra }}</span>
-                    <span class="dark:text-white">{{ item.price }}</span>
-                </div>  
-            </div>
-            {% endfor %}
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
+                🍽️ Gestión del Comedor
+            </h1>
+            <div class="mt-2 h-1 w-24 bg-blue-600 rounded mx-auto"></div>
         </div>
 
-         <div class="border border-gray-400 p-4 w-full md:w-1/2 shadow-lg rounded-lg">
-            <div class="flex justify-between items-center mb-2">
-                <h2 class="text-lg font-semibold dark:text-white">Limite de Venta</h2>
-                <button class="text-lg font-bold w-6 h-6 border border-black rounded-full flex items-center justify-center dark:text-white" data-bs-toggle="modal" data-bs-target="#limite">+</button>
+        <!-- Cards Container -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
+            
+            <!-- Card Extras -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 transition-transform hover:scale-105 duration-300">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-2xl">➕</span>
+                            <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Extras</h2>
+                        </div>
+                        <button class="w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center text-2xl font-bold shadow-lg transition-all duration-300 hover:rotate-90" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#extras">
+                            +
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-3 max-h-96 overflow-y-auto pr-2 custom-scrollbar">
+                        {% for item in resultados %}
+                        <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                            <span class="font-medium text-gray-700 dark:text-gray-200">{{ item.name_extra }}</span>
+                            <span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">
+                                ${{ item.price }}
+                            </span>
+                        </div>
+                        {% empty %}
+                        <div class="text-center py-8 text-gray-500 dark:text-gray-400">
+                            No hay extras disponibles
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-            <div class="text-base space-y-2">
-                
-                <div class="flex justify-between">
-                    <span class="font-medium dark:text-white">limite</span>
-                     <span class="dark:text-white">{{ total_all }}</span> 
-                </div>
-                <div class="flex justify-between">
-                    <span class="font-medium dark:text-white">Restantes del día</span>
-                    <span class="dark:text-white">{{ resultado }}</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="font-medium dark:text-white">total Vendido</span>
-                    <span class="dark:text-white">{{ date }}</span>
+
+            <!-- Card Límite de Venta -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 transition-transform hover:scale-105 duration-300">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-2xl">📊</span>
+                            <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Límite de Venta</h2>
+                        </div>
+                        <button class="w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center text-2xl font-bold shadow-lg transition-all duration-300 hover:rotate-90" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#limite">
+                            +
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <!-- Estadísticas -->
+                        <div class="grid grid-cols-1 gap-3">
+                            <div class="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                                <span class="text-gray-600 dark:text-gray-300">Límite total</span>
+                                <span class="text-xl font-bold text-blue-600 dark:text-blue-400">{{ total_all }}</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center p-3 bg-green-50 dark:bg-green-900/30 rounded-lg">
+                                <span class="text-gray-600 dark:text-gray-300">Restantes del día</span>
+                                <span class="text-xl font-bold text-green-600 dark:text-green-400">{{ resultado }}</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center p-3 bg-orange-50 dark:bg-orange-900/30 rounded-lg">
+                                <span class="text-gray-600 dark:text-gray-300">Total vendido</span>
+                                <span class="text-xl font-bold text-orange-600 dark:text-orange-400">{{ date }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Barra de progreso (opcional) -->
+                        {% if total_all > 0 %}
+                        <div class="mt-4">
+                            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-1">
+                                <span>Progreso</span>
+                                <span>{{ date|default:0 }} / {{ total_all }}</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                                <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" 
+                                     style="width: {% widthratio date|default:0 total_all 100 %}%"></div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-  
+
+<!-- Estilos personalizados para scrollbar -->
+<style>
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+</style>
+
 {% include 'modal/extras.html' %}
 {% include 'modal/limite.html' %}
-
 
 {% endblock %}
